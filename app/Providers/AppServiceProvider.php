@@ -34,6 +34,11 @@ class AppServiceProvider extends ServiceProvider
             $images = implode(' ', $arr);
             //присвоение столбцу строки с файлами изображений разделенные пробелом
             $model->img = $images;
+            //проверка и запись чекбоксов
+            $model->hit = $model->hit === null ? false:true;
+            $model->new = $model->new === null ? false:true;
+            $model->approved = $model->approved === null ? false:true;
+
         });
         //триггер
         //удаление изображений из папки на сервере после удаления из БД

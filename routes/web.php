@@ -22,7 +22,7 @@ Route::namespace('Admin')->middleware('auth')->group(function ()
     Route::get('/admin','ProductController@index')->name('admin.home');
     Route::get('/admin/product/create', 'ProductController@create')->name('admin.prod.create');
     Route::post('/admin/product/store', 'ProductController@store')->name('admin.prod.store');
-    Route::get('/admin/product/{id}','ProductController@show')->name('admin.product.show');
+    Route::get('/admin/product/{id}','ProductController@show')->name('admin.prod.show');
     Route::get('/admin/product/{id}/edit','ProductController@edit')->name('admin.prod.edit');
     Route::patch('/admin/product/{id}', 'ProductController@update')->name('admin.prod.update');
     Route::delete('/admin/product/{id}','ProductController@destroy')->name('admin.prod.delete');

@@ -14,6 +14,7 @@
                             <th>name</th>
                             <th>category</th>
                             <th>brand</th>
+                            <th>price</th>
                             <th>orders</th>
                             <th>description</th>
                             <th>tag</th>

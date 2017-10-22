@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['title', 'desc','slug','cat_id', 'img','approved','hit','new','qti',];
+    protected $fillable = ['title', 'desc','slug','price','cat_id', 'img','approved','hit','new','qti',];
 
     //before save multiple upload images function in Http/Providers/AppServiceProvider
 

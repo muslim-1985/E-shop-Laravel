@@ -25,6 +25,23 @@ class ProductController extends Controller
         return view('admin.product.create',compact('tags','categories','brands'));
     }
 
+    public function store (Request $request) {
+        $request->validate ([
+            'title' => 'required|max:255',
+            'desc' => 'required',
+        ]);
+        //предвариетельная работа с чекбоксами и изображениями ведеться в Http/Provides/AppServiceProvider
+        $product = Product::create($request->all());
+
+        if($request->input('tags')) {
+            $product->tags()->sync($request->input('tags'));
+        }
+
+        //редирект на индексную страницу
+        return redirect('/admin');
+    }
+
+
     //category filter function
     public function CategoryFilter ()
     {

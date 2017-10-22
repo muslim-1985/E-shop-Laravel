@@ -62,6 +62,10 @@
                         {{ Form::checkbox('new',0, false) }}
 
                     </div>
+                    <div class="col-md-4">
+                        {{ Form::label('price','price') }}
+                        {{ Form::text('price', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '100')) }}
+                    </div>
                 </div>
 
 
