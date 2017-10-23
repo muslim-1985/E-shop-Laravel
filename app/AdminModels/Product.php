@@ -8,11 +8,8 @@ class Product extends Model
 {
     protected $fillable = ['title', 'desc','slug','price','cat_id', 'img','approved','hit','new','qti',];
 
-    //публичное свойство для записи строки с файлами изображения вызывается в AppServiceProvider
-    public $images;
-
     //before save multiple upload images function in Http/Providers/AppServiceProvider
-    public function SaveImages(array $img)
+    public function PreparedImages(array $img)
     {
         //объявление переменной с пустым массивом для сохранения в нем данных с названиями файлов
         $arr=[];
@@ -26,8 +23,8 @@ class Product extends Model
             }
         //преобразование массива снова в строку для сохранения в БД (в реляционных БД массивы не храняться)
         $images = implode(' ', $arr);
-        //присвоение публичному свойству строки с файлами изображений разделенные пробелом
-        $this->images = $images;
+        //возвращаем подготовленную переменную с путями к файлам изображений для сохранения в БД
+        return $images;
     }
 
     public function category ()

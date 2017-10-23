@@ -18,12 +18,9 @@ class AppServiceProvider extends ServiceProvider
 
         //триггер сохранения изображений в папке на сервере перед сохранением в БД
         Product::creating(function ($model){
-            //функция записывает преобразованную и хешированную (из входящего массива) строку с файлами в
-            //публичное свойство images модели Product
-            $model->SaveImages($model->img);
-            //добавляем это свойство с названиями и путями файлов
-            //к свойству img (столбцу в БД)
-            $model->img = $model->images;
+            //метод подготавливает изображения: хеширует, перемещает в папку,
+            // преобразовывает входящий массив в строку
+            $model->img = $model->PreparedImages($model->img);
             //проверка и запись чекбоксов
             $model->hit = $model->hit === null ? false:true;
             $model->new = $model->new === null ? false:true;
@@ -31,8 +28,7 @@ class AppServiceProvider extends ServiceProvider
         });
         //триггер обновления
         Product::updating(function ($model){
-            $model->SaveImages($model->img);
-            $model->img = $model->images;
+            $model->img = $model->PreparedImages($model->img);
 
             //проверка и запись чекбоксов
             $model->hit = $model->hit === null ? false:true;
