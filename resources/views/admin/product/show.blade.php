@@ -3,25 +3,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>View Post</h1>
+                <h1>View Product</h1>
             </div>
             <div class="row">
                 <div class="col-md-8">
-                    <h3>{{ $post->id }}</h3>
-                    <h3>{{ $post->title }}</h3>
+                    <h3>{{ $product->id }}</h3>
+                    <h3>{{ $product->title }}</h3>
                     <p>
-                        @if(isset($post->category->title))
-                            {{ $post->category->title }}
+                        @if(isset($product->category->title))
+                            {{ $product->category->title }}
                         @else {{ "Без категории" }}
                         @endif
                     </p>
-                    <p>{{ $post->desc }}</p>
+                    <p>{{ $product->desc }}</p>
                     <p>
-                        @foreach($post->tags as $tag)
+                        @foreach($product->tags as $tag)
                             {{ $tag->title }}
                         @endforeach
                     </p>
-                    <p>{{ $post->slug }}</p>
+                    <p>{{ $product->slug }}</p>
                     <p>
                         @foreach($images as $image)
                             <img src="{{asset("/storage/app/$image" )}}" alt="No image">
@@ -32,18 +32,18 @@
                     <div class="well">
                         <dl class="dl-horisontal">
                             <dt>Created at:</dt>
-                            <dd>{{ date('M j,Y', strtotime($post->created_at ))}}</dd>
+                            <dd>{{ date('M j,Y', strtotime($product->created_at ))}}</dd>
                         </dl>
                         <dl class="dl-horisontal">
                             <dt>Last updated:</dt>
-                            <dd>{{ date('M j,Y', strtotime($post->updated_at ))}}</dd>
+                            <dd>{{ date('M j,Y', strtotime($product->updated_at ))}}</dd>
                         </dl>
                         <div class="row">
                             <div class="col-sm-6">
-                                <a href="{{ action('Admin\PostController@edit', $post->id) }}" class="btn btn-default btn-block">Edit</a>
+                                <a href="{{ action('Admin\ProductController@edit', $product->id) }}" class="btn btn-default btn-block">Edit</a>
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::model($post,['method' => 'DELETE','action' => ['Admin\PostController@destroy',$post->id],'style'=>'display:inline']) !!}
+                                {!! Form::model($product,['method' => 'DELETE','action' => ['Admin\ProductController@destroy',$product->id],'style'=>'display:inline']) !!}
 
                                 <button type="submit" style="display: inline;" class="btn btn-danger btn-block">Delete</button>
 

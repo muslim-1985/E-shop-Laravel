@@ -18,26 +18,32 @@ class AppServiceProvider extends ServiceProvider
 
         //триггер сохранения изображений в папке на сервере перед сохранением в БД
         Product::creating(function ($model){
-            //объявление переменной с пустым массивом для сохранения в нем данных с названиями файлов
-            $arr=[];
-            if($model->img) {
-                foreach ($model->img as $image) {
-                    //сохранение файлов в папке на сервере public/images(создаем папку) и присвоение им уникального имени
-                    //перед сохранением обязательно меняем стандартный путь функции store() в файле config/filesystems.php
-                    //'root'=>public_path('images')
-                    $imageName = $image->store('image');
-                    //сохрание файлов в массиве
-                    $arr[] = $imageName;
-                }
-            }
-            //преобразование массива снова в строку для сохранения в БД (в реляционных БД массивы не храняться)
-            $images = implode(' ', $arr);
-            //присвоение столбцу строки с файлами изображений разделенные пробелом
-            $model->img = $images;
+            //функция записывает преобразованную и хешированную (из входящего массива) строку с файлами в
+            //публичное свойство images модели Product
+            $model->SaveImages($model->img);
+            //добавляем это свойство с названиями и путями файлов
+            //к свойству img (столбцу в БД)
+            $model->img = $model->images;
             //проверка и запись чекбоксов
             $model->hit = $model->hit === null ? false:true;
             $model->new = $model->new === null ? false:true;
-            $model->approved = $model->approved === null ? false:true;
+
+        });
+        //триггер обновления
+        Product::updating(function ($model){
+            $model->SaveImages($model->img);
+            $model->img = $model->images;
+
+            //проверка и запись чекбоксов
+            $model->hit = $model->hit === null ? false:true;
+            $model->new = $model->new === null ? false:true;
+
+            //удаляем старые теги
+            if($model->tags)
+            {
+                $model->tags()->detach();
+                $model->tags()->delete();
+            }
 
         });
         //триггер

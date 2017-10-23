@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
     <title>Document</title>
 </head>
 <body>
@@ -16,6 +17,7 @@
 </body>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/parsley.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2();

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 {{-- не забываем добавлять атрибут для загрузки фалов "multipart/formdata ('files'=> true)" --}}
-                {!! Form::open(['url' => 'admin/product/store', 'files' => true]) !!}
+                {!! Form::open(['url' => 'admin/product/store', 'files' => true, 'data-parsley-validate'=>'']) !!}
                     {{ Form::label('title', 'Title') }}
                     {{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '150')) }}
 
@@ -48,11 +48,9 @@
                     </div>
                     <div class="col-md-4">
                         {{ Form::label('qti','quantity') }}
-                        {{ Form::text('qti', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '100')) }}
+                        {{ Form::text('qti', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '100', 'data-parsley-type'=>'number')) }}
                     </div>
                     <div class="col-md-4">
-                        {{Form::label('approved')}}
-                        {{ Form::checkbox('approved',0, false) }}
 
                         {{ Form::label('hit')}}
                         {{ Form::checkbox('hit',0, false) }}

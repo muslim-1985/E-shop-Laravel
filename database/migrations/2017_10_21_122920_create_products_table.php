@@ -22,7 +22,6 @@ class CreateProductsTable extends Migration
             $table->text('img');
             $table->boolean('hit');
             $table->boolean('new');
-            $table->boolean('approved');
             $table->integer('qti')->nullable();
             $table->integer('cat_id')->unsigned();
             $table->integer('brand_id')->unsigned();

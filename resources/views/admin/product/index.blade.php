@@ -13,16 +13,16 @@
                             <th>id</th>
                             <th>name</th>
                             <th>category</th>
-                            <th>brand</th>
-                            <th>price</th>
-                            <th>orders</th>
                             <th>description</th>
                             <th>tag</th>
                             <th>slug</th>
-                            <th>images</th>
+                            <th>orders</th>
+                            <th>brand</th>
+                            <th>price</th>
                             <th>quantity</th>
                             <th>hit</th>
                             <th>new</th>
+                            <th>images</th>
                             <th>created at</th>
                             </thead>
                             <tbody>
@@ -44,6 +44,20 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $product->slug }}</td>
+                                    <td>
+                                        {{--сохраняем id товара на фронтенде во время заказа товара с помощью скрытого поля
+                                        куда передаються айдишники
+                                        далее мы их вылавливаем request и вызываем модель товара и сохраняем в
+                                        промежуточной таблице--}}
+                                        @foreach($product->orders as $order)
+                                            {{ $order->id }}
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $product->brand }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->qti }}</td>
+                                    <td>{{ $product->hit }}</td>
+                                    <td>{{ $product->new }}</td>
                                     <td>
                                         @foreach(explode(' ', $product->img) as $image)
                                             <img src="{{asset("images/$image" )}}" alt="No image" style="width: 50px; height: 50px;">
