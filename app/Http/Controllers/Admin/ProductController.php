@@ -89,8 +89,9 @@ class ProductController extends Controller
     }
 
     //category filter function
-    public function CategoryFilter ()
+    public function CategoryFilter($id)
     {
-        return true;
+        $category = Category::find($id);
+        return view('admin.product.category-filter',compact('category'));
     }
 }

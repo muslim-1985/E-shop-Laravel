@@ -23,6 +23,7 @@
 
                     {{ Form::label('cat_id', 'Category:') }}
                     <select class="form-control" name="cat_id">
+                        <option value=" " selected></option>
                         @foreach($categories as $cat)
                             <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
                         @endforeach

@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $model->new = $model->new === null ? false:true;
 
         });
+
         //триггер обновления
         Product::updating(function ($model){
             $model->img = $model->PreparedImages($model->img);
@@ -42,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
         });
+
         //триггер
         //удаление изображений из папки на сервере после удаления из БД
         Product::deleted(function($model){
@@ -60,6 +62,23 @@ class AppServiceProvider extends ServiceProvider
         \View::composer('admin.layouts.partials._nav', function ($view){
 
             $view->with('categories', Category::all());
+        });
+        Category::creating(function ($model){
+            if (isset($model->img)) {
+                $imageName = $model->img->store('cat-img');
+                $model->img = $imageName;
+            }
+            $model->approved = $model->approved === null ? false:true;
+        });
+        Category::updating(function($model){
+            if ($model->img) {
+                $imageName = $model->img->store('cat-img');
+                $model->img = $imageName;
+            }
+        });
+
+        Category::deleted(function ($model){
+            @unlink(public_path("images/$model->img"));
         });
     }
 

@@ -28,10 +28,11 @@
                          --}}
                         {{-- фильтрация категорий. Передаем айдишник категории методу контроллера PostController CategoryFilter --}}
                         @foreach($categories as $category)
-                            <li><a href="{{ route('category.filter',$category->id) }}">{{ $category->title }}</a></li>
+                            <li><a href="{{ route('admin.category.filter',$category->id) }}">{{ $category->title }}</a></li>
                         @endforeach
                     </ul>
                 </li>
+                <li><a href="{{ route('admin.category') }}">Categories</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->

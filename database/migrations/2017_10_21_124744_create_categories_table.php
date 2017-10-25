@@ -21,7 +21,6 @@ class CreateCategoriesTable extends Migration
             $table->string('slug');
             $table->boolean('approved');
             $table->integer('parent_id')->nullable();
-            $table->integer('qti');
             $table->timestamps();
         });
     }
