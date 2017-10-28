@@ -13,7 +13,15 @@
                     <select class="form-control" name="parent_id">
                         <option value=" " selected></option>
                         @foreach($categories as $cat)
-                            <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
+                            @if($category->id === $cat->id)
+                                <option disabled style="color: #7DA0B1">{{ $cat->title }}</option>
+                                @elseif($cat->parent)
+                                <optgroup label="{{ $cat->parent->title }}">
+                                    <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
+                                </optgroup>
+                                @else
+                                <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
+                            @endif
                         @endforeach
                     </select>
                     {{ Form::label('title', 'Название') }}

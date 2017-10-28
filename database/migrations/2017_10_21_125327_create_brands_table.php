@@ -20,7 +20,6 @@ class CreateBrandsTable extends Migration
             $table->string('img')->nullable();
             $table->string('slug');
             $table->boolean('approved');
-            $table->integer('qti');
             $table->timestamps();
         });
     }

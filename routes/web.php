@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 //Backend routes
-Route::namespace('Admin')->middleware('auth')->group(function ()
+Route::namespace('Admin')->middleware('checkAdminRole')->group(function ()
 {
     //Product CRUD routes
     Route::get('/admin','ProductController@index')->name('admin.home');
