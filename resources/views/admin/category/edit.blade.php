@@ -12,15 +12,23 @@
                     {{ Form::label('parent_id', 'Parent Category:') }}
                     <select class="form-control" name="parent_id">
                         <option value=" " selected></option>
-                        @foreach($categories as $cat)
+                        {{--в переменной $rootCategories записан метод выборки категорий без родителя
+                          из модели Category
+                          return $this->where('parent_id',null)->with('childs')->get();--}}
+                        @foreach($rootCategories as $cat)
+                            {{--отключаем возможность выбора самой себя--}}
                             @if($category->id === $cat->id)
-                                <option disabled style="color: #7DA0B1">{{ $cat->title }}</option>
-                                @elseif($cat->parent)
-                                <optgroup label="{{ $cat->parent->title }}">
-                                    <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
-                                </optgroup>
-                                @else
-                                <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
+                                <option disabled>{{ $cat->title . " (категория не может ссылаться на саму себя)" }}</option>
+                            @else
+                                <option id="cat" value="{{ $cat->id }}">{{ $cat->title }}</option>
+                            @endif
+                            {{-- выводим дочерние категории если они есть --}}
+                            @if($cat->childs)
+                                <ul>
+                                    {{--передаем в шаблон объект модели $category и $cat->childs записываем в переменную
+                                    $children--}}
+                                    @include('admin.category.cat-tree-edit',['children'=>$cat->childs, 'category'=>$category])
+                                </ul>
                             @endif
                         @endforeach
                     </select>

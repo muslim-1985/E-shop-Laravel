@@ -7,13 +7,15 @@
                 {{ Form::label('parent_id', 'Parent Category:') }}
                 <select class="form-control" name="parent_id">
                     <option value=" " selected></option>
-                    @foreach($categories as $cat)
-                        @if($cat->parent)
-                        <optgroup label="{{ $cat->parent->title }}">
-                            <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
-                        </optgroup>
-                        @else
-                            <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
+                    {{--в переменной $rootCategories записан метод выборки категорий без родителя
+                          из модели Category
+                          return $this->where('parent_id',null)->with('childs')->get();--}}
+                    @foreach($rootCategories as $cat)
+                        <option id="cat" value="{{ $cat->id }}">{{ $cat->title }}</option>
+                        @if($cat->childs)
+                            <ul>
+                                @include('admin.category.cat-tree',['children'=>$cat->childs])
+                            </ul>
                         @endif
                     @endforeach
                 </select>

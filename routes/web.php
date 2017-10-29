@@ -34,7 +34,21 @@ Route::namespace('Admin')->middleware('checkAdminRole')->group(function ()
     Route::get('/admin/category/{id}/edit','CategoryController@edit')->name('admin.cat.edit');
     Route::patch('/admin/category/{id}', 'CategoryController@update')->name('admin.cat.update');
     Route::delete('/admin/category/{id}','CategoryController@destroy')->name('admin.cat.delete');
-    //обновление чекбокса публикации комментария
+    //Brand CRUD
+    Route::get('/admin/brand','BrandController@index')->name('admin.brand');
+    Route::get('/admin/brand/create', 'BrandController@create')->name('admin.brand.create');
+    Route::post('/admin/brand/store', 'BrandController@store')->name('admin.brand.store');
+    Route::get('/admin/brand/{id}','BrandController@show')->name('admin.brand.show');
+    Route::get('/admin/brand/{id}/edit','BrandController@edit')->name('admin.brand.edit');
+    Route::patch('/admin/brand/{id}', 'BrandController@update')->name('admin.brand.update');
+    Route::delete('/admin/brand/{id}','BrandController@destroy')->name('admin.brand.delete');
+
+    //обновление чекбокса публикации бренда
+    Route::patch('/admin/brand/{id}/approve','BrandController@ApprovedBrand')->name('admin.brand.approved');
+    //Brand filter
+    Route::get('/admin/post/brand/{id}','BrandController@BrandFilter')->name('admin.brand.filter');
+
+    //обновление чекбокса публикации категории
     Route::patch('/admin/category/{id}/approve','CategoryController@ApprovedCategory')->name('admin.cat.approved');
     //Category filter
     Route::get('/admin/post/category/{id}','ProductController@CategoryFilter')->name('admin.category.filter');

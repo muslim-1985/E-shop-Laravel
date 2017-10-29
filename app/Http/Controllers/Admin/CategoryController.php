@@ -26,10 +26,13 @@ class CategoryController extends Controller
     }
 
 
-    public function create ()
+    public function create (Category $cat)//вызываем модель категорий
     {
         $categories = Category::all();
-        return view('admin.category.create',compact('categories'));
+        //выборка категорий без родителя
+        $rootCategories = $cat->rootCategory();
+
+        return view('admin.category.create',compact('categories','rootCategories'));
     }
 
     public function store (Request $request)
@@ -48,11 +51,13 @@ class CategoryController extends Controller
         return view('admin.category.show',compact('category'));
     }
 
-    public function edit ($id)
+    public function edit (Category $cat, $id)
     {
         $categories = Category::all();
+        //выборка категорий без родителя
+        $rootCategories = $cat->rootCategory();
         $category = Category::find($id);
-        return view('admin.category.edit',compact('category','categories'));
+        return view('admin.category.edit',compact('category','categories','rootCategories'));
     }
 
     public function update (Request $request, $id)

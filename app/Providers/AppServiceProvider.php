@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\AdminModels\Brand;
 use App\AdminModels\Category;
 use App\AdminModels\Product;
 use Illuminate\Support\ServiceProvider;
@@ -63,6 +64,7 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('categories', Category::all());
         });
+
         Category::creating(function ($model){
             if (isset($model->img)) {
                 $imageName = $model->img->store('cat-img');
@@ -73,6 +75,24 @@ class AppServiceProvider extends ServiceProvider
         Category::updating(function($model){
             if ($model->img) {
                 $imageName = $model->img->store('cat-img');
+                $model->img = $imageName;
+            }
+        });
+
+        Category::deleted(function ($model){
+            @unlink(public_path("images/$model->img"));
+        });
+
+        Brand::creating(function ($model){
+            if (isset($model->img)) {
+                $imageName = $model->img->store('brand-img');
+                $model->img = $imageName;
+            }
+            $model->approved = $model->approved === null ? false:true;
+        });
+        Brand::updating(function($model){
+            if ($model->img) {
+                $imageName = $model->img->store('brand-img');
                 $model->img = $imageName;
             }
         });
