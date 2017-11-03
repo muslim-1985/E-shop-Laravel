@@ -43,6 +43,16 @@ Route::namespace('Admin')->middleware('checkAdminRole')->group(function ()
     Route::patch('/admin/brand/{id}', 'BrandController@update')->name('admin.brand.update');
     Route::delete('/admin/brand/{id}','BrandController@destroy')->name('admin.brand.delete');
 
+    //Tag CRUD vue js one page application
+    Route::get('/admin/tag',function (){
+        return view('admin.tag.index');
+    })->name('admin.tag');
+    Route::get('/admin/tag/view','TagController@index');
+    Route::get('/admin/tag/create', 'TagController@create')->name('admin.tag.create');
+    Route::post('/admin/tag/store', 'TagController@store')->name('admin.tag.store');
+    Route::patch('/admin/tag/{id}', 'TagController@update')->name('admin.tag.update');
+    Route::delete('/admin/tag/{id}','TagController@destroy')->name('admin.tag.delete');
+
     //обновление чекбокса публикации бренда
     Route::patch('/admin/brand/{id}/approve','BrandController@ApprovedBrand')->name('admin.brand.approved');
     //Brand filter
