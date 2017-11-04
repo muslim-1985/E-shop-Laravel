@@ -13,16 +13,17 @@ class ProductController extends Controller
 {
     public function index ()
     {
-        $products = Product::all();
+        $products = Product::with('tags','brand','category','orders')->paginate(5);
         return view('admin.product.index', compact('products'));
     }
 
-    public function create ()
+    public function create (Category $cat)
     {
         $tags = Tag::all();
-        $categories = Category::all();
+        $rootCategories = $cat->rootCategory();
+
         $brands = Brand::all();
-        return view('admin.product.create',compact('tags','categories','brands'));
+        return view('admin.product.create',compact('tags','rootCategories','brands'));
     }
 
     public function store (Request $request) {
@@ -71,12 +72,28 @@ class ProductController extends Controller
             'desc' => 'max:255',
         ]);
 
-        $product = Product::find($id)->update($request->all());
+        $product = Product::find($id);
 
+        $pr = new Product();
+        //очистка папки на сервере перед обновлением
+        $pr->ClearImageFiles($product->img);
+
+//        $request->has('hit') ? $product->hit = 1:$product->hit = 0;
+//        $request->has('new') ? $product->new = 1:$product->new = 0;
+
+        //удаляем старые теги
+        if($product->tags)
+        {
+            $product->tags()->detach();
+            $product->tags()->delete();
+        }
+        //добавляем новые
         if($request->input('tags')) {
             $product->tags()->sync($request->input('tags'));
         }
 
+        //обновляем таблицу и редиректим
+        $product->update($request->all());
         return redirect('/admin');
     }
 

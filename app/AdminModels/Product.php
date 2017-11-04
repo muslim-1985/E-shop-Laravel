@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['title', 'desc','slug','price','cat_id', 'img','approved','hit','new','qti',];
+    protected $fillable = ['title', 'desc','slug','price','cat_id','brand_id', 'img','hit','new','qti',];
+    //очистка папки на сервере перед обновлением
+    public function ClearImageFiles (string $image)
+    {
+        $images = explode(' ',$image);
+
+        foreach ($images as $img){
+            @unlink(public_path("images/$img"));
+        }
+    }
 
     //before save multiple upload images function in Http/Providers/AppServiceProvider
     public function PreparedImages(array $img)

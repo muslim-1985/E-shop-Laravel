@@ -24,8 +24,16 @@
                     {{ Form::label('cat_id', 'Category:') }}
                     <select class="form-control" name="cat_id">
                         <option value=" " selected></option>
-                        @foreach($categories as $cat)
-                            <option id="cat_id" value="{{$cat->id}}" selected="selected">{{ $cat->title }}</option>
+                        {{--в переменной $rootCategories записан метод выборки категорий без родителя
+                              из модели Category
+                              return $this->where('parent_id',null)->with('childs')->get();--}}
+                        @foreach($rootCategories as $cat)
+                            <option id="cat" value="{{ $cat->id }}">{{ $cat->title }}</option>
+                            @if($cat->childs)
+                                <ul>
+                                    @include('admin.product.cat-tree',['children'=>$cat->childs])
+                                </ul>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -41,7 +49,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         {{ Form::label('brand_id', 'Brand:') }}
-                        <select class="form-control" name="cat_id">
+                        <select class="form-control" name="brand_id">
                             @foreach($brands as $brand)
                                 <option id="brand_id" value="{{$brand->id}}" selected="selected">{{ $brand->title }}</option>
                             @endforeach

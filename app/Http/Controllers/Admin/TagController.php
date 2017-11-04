@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\AdminModels\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+//все возвращаемые значения в json
 
 class TagController extends Controller
 {
@@ -21,11 +21,11 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title'        => 'required|max:255',
+            'title'=> 'required|max:255',
         ]);
 
         $task = Tag::create([
-            'title'        => request('title'),
+            'title'=> request('title'),
         ]);
 
         return response()->json([

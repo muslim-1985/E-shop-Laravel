@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             {{ Form::label('brand_id', 'Brand:') }}
-                            <select class="form-control" name="cat_id">
+                            <select class="form-control" name="brand_id">
                                 @foreach($brands as $brand)
                                     <option id="brand_id" value="{{$brand->id}}" selected="selected">{{ $brand->title }}</option>
                                 @endforeach
@@ -61,11 +61,11 @@
                         <div class="col-md-4">
 
                             {{ Form::label('hit')}}
-                            {{ Form::checkbox('hit',0, false) }}
+                            <input type="checkbox" name="hit">
 
 
                             {{Form::label('new') }}
-                            {{ Form::checkbox('new',0, false) }}
+                            <input type="checkbox" name="new">
 
                         </div>
                         <div class="col-md-4">

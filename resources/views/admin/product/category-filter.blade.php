@@ -53,7 +53,7 @@
                                             {{ $order->id }}
                                         @endforeach
                                     </td>
-                                    <td>{{ $product->brand }}</td>
+                                    <td>{{ $product->brand['title'] }}</td>
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->qti }}</td>
                                     <td>{{ $product->hit }}</td>

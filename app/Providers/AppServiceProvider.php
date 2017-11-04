@@ -36,13 +36,6 @@ class AppServiceProvider extends ServiceProvider
             $model->hit = $model->hit === null ? false:true;
             $model->new = $model->new === null ? false:true;
 
-            //удаляем старые теги
-            if($model->tags)
-            {
-                $model->tags()->detach();
-                $model->tags()->delete();
-            }
-
         });
 
         //триггер
