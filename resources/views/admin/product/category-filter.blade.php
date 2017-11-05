@@ -3,12 +3,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>View Products Category</h1>
-                    <a href="{{ route('admin.prod.create') }}" class="btn btn-default">Create Product</a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="{{ route('admin.prod.create') }}" class="btn btn-primary btn-xs pull-right">+Create Product</a>
+                            My Products
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table">
+                        <table class="table table-bordered table-striped table-responsive">
                             <thead>
                             <th>id</th>
                             <th>name</th>
@@ -24,6 +28,7 @@
                             <th>new</th>
                             <th>images</th>
                             <th>created at</th>
+                            <th>actions</th>
                             </thead>
                             <tbody>
                             @foreach($category->products as $product)
@@ -65,13 +70,13 @@
                                     </td>
                                     <td>{{ date('M j,Y', strtotime($product->created_at ))}}</td>
                                     <td>
-                                        <a href="{{ route('admin.prod.edit', $product->id) }}" class="btn btn-default btn-sm">Edit</a>
+                                        <a href="{{ route('admin.prod.edit', $product->id) }}" class="btn btn-default btn-xs">Edit</a>
                                         {!! Form::open(['method' => 'DELETE','route' => ['admin.prod.delete',$product->id],'style'=>'display:inline']) !!}
 
-                                        <button type="submit" style="display: inline;" class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="submit" style="display: inline;" class="btn btn-danger btn-xs">Delete</button>
 
                                         {!! Form::close() !!}
-                                        <a href="{{ route('admin.prod.show', $product->id) }}" class="btn btn-success btn-sm">Show</a>
+                                        <a href="{{ route('admin.prod.show', $product->id) }}" class="btn btn-success btn-xs">Show</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -31,11 +31,8 @@ class AppServiceProvider extends ServiceProvider
         //триггер обновления
         Product::updating(function ($model){
             $model->img = $model->PreparedImages($model->img);
-
-            //проверка и запись чекбоксов
-            $model->hit = $model->hit === null ? false:true;
-            $model->new = $model->new === null ? false:true;
-
+            //чекбоксы не проверяем, используем скрытое поле во вьюшке со значением "0"
+            //и таким же именем столбца так как в Request::all() если чекбокс не выставлен он просто не попадает
         });
 
         //триггер

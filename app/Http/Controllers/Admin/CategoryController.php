@@ -66,7 +66,11 @@ class CategoryController extends Controller
             'title' => 'max:255',
             'slug' => 'required',
         ]);
-        Category::find($id)->update($request->all());
+
+        $category = Category::find($id);
+        //clear image befor update
+        Category::ClearImage($category->img);
+        $category->update($request->all());
         return redirect('admin/category');
     }
 

@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $fillable = ['title', 'desc','slug','price','cat_id','brand_id', 'img','hit','new','qti',];
     //очистка папки на сервере перед обновлением
-    public function ClearImageFiles (string $image)
+    public static function ClearImageFiles (string $image)
     {
         $images = explode(' ',$image);
 

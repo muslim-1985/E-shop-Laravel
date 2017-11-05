@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
@@ -68,5 +68,9 @@ Route::namespace('Admin')->middleware('checkAdminRole')->group(function ()
 });
 
 Auth::routes();
-
+//frontend routes
 Route::get('/home', 'HomeController@index')->name('home');
+Route::namespace('Attachment')->group(function (){
+    Route::get('/','SiteController@index')->name('front.main');
+    Route::get('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
+});

@@ -8,6 +8,12 @@ class Category extends Model
 {
     protected $fillable = ['title','desc','img','slug','approved','parent_id'];
 
+
+    public static function ClearImage (string $image)
+    {
+      return  @unlink(public_path("images/$image"));
+    }
+
     public function rootCategory()
     {
         return $this->where('parent_id',null)->with('childs')->get();

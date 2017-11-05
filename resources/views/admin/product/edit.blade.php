@@ -61,11 +61,15 @@
                         <div class="col-md-4">
 
                             {{ Form::label('hit')}}
-                            <input type="checkbox" name="hit">
+                            {{--устанавливаем скрытое поле для того чтобы в "Request::all()" попадало значение
+                            столбца по умолчанию (иначе Request возвращает пустой результат при обновлении)--}}
+                            <input type="hidden" name="hit" value="0">
+                            <input type="checkbox" name="hit" value="1">
 
 
                             {{Form::label('new') }}
-                            <input type="checkbox" name="new">
+                            <input type="hidden" name="new" value="0">
+                            <input type="checkbox" name="new" value="1">
 
                         </div>
                         <div class="col-md-4">

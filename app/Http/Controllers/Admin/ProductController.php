@@ -74,12 +74,8 @@ class ProductController extends Controller
 
         $product = Product::find($id);
 
-        $pr = new Product();
         //очистка папки на сервере перед обновлением
-        $pr->ClearImageFiles($product->img);
-
-//        $request->has('hit') ? $product->hit = 1:$product->hit = 0;
-//        $request->has('new') ? $product->new = 1:$product->new = 0;
+        Product::ClearImageFiles($product->img);
 
         //удаляем старые теги
         if($product->tags)
