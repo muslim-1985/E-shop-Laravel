@@ -14,6 +14,7 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -44,18 +45,21 @@
             $.ajax({
                 url: url,
                 data: {
-                    id: $('.add-to-cart').data('id'),
+                    id: id,
                 },
                 type: 'GET',
-                success: function (response) {
-                    alert('Товар добавлен в корзину'+this.data.id);
+                success: function (res) {
+                    if (!res) alert('error');
+                    console.log(res);
                 }
             });
         });
 
     });
 </script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script>
+    $('#myModal').modal(options);
+</script>
 <script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>
 <script src="{{ asset('js/price-range.js') }}"></script>
 <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>

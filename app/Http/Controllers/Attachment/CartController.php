@@ -8,9 +8,15 @@ use App\Http\Controllers\Controller;
 
 class CartController extends AppController
 {
-    public function AddToCart ($id)
+    public function AddToCart (Request $request, $id)
     {
         $cart = Product::find($id);
-        dump($cart);
+        if (empty($cart)){
+            return false;
+        }
+        session()->put('title',$cart->title);
+        session()->put('price',$cart->price);
+        session()->put('qti',$cart->qti);
+        session()->save();
     }
 }
