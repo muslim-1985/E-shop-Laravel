@@ -6,7 +6,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <button @click="initAddTask()" class="btn btn-primary btn-xs pull-right">
-                            + Add New Tag
+                            + Add Tag
                         </button>
                         My Tags
                     </div>

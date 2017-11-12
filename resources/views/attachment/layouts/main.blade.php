@@ -42,24 +42,26 @@
             e.preventDefault();
             var url = $(this).data('url');
             var id = $(this).data('id');
+            var title = $(this).data('title');
+            var price = $(this).data('price');
             $.ajax({
                 url: url,
                 data: {
                     id: id,
+                    title: title,
+                    price: price,
                 },
                 type: 'GET',
-                success: function (res) {
-                    if (!res) alert('error');
-                    console.log(res);
+                success: function (responce) {
+                    if (!responce) alert(id);
+                    alert('Ваш товар успешно добавлен в корзину');
                 }
             });
         });
 
     });
 </script>
-<script>
-    $('#myModal').modal(options);
-</script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>
 <script src="{{ asset('js/price-range.js') }}"></script>
 <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    public static function AddToCart ($product, $qti=1)
+    public static function AddCart ($product, $qti=1)
     {
 
     }

@@ -73,4 +73,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Attachment')->group(function (){
     Route::get('/','SiteController@index')->name('front.main');
     Route::get('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
+    Route::get('/cart','CartController@GetCartData')->name('front.cart');
+    Route::delete('/cart/delete/{id}','CartController@DeleteCartData')->name('front.cart.delete');
 });
