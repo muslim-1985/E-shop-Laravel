@@ -13,7 +13,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Оформить заказ</button>
+                <a href="{{ route('ordering.cart') }}" class="btn btn-primary">Оформить заказ</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

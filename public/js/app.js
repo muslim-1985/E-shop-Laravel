@@ -43283,36 +43283,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             errors: [],
-            tasks: []
+            tasks: [],
+            qty: 1
         };
     },
     mounted: function mounted() {
         this.readTasks();
     },
+    creating: function creating() {
+        this.readTasks();
+    },
 
     methods: {
+        addQty: function addQty() {
+            return this.qty++;
+        },
+        delQty: function delQty() {
+            if (this.qty <= 1) {
+                return;
+            }
+            this.qty--;
+        },
         readTasks: function readTasks() {
             var _this = this;
 
-            axios.get('http://test/cart').then(function (response) {
+            axios.get('/cart').then(function (response) {
                 _this.tasks = response.data.tasks;
-                _this.readTasks();
             }).catch(function (error) {
                 alert('error');
             });
         },
-        deleteTask: function deleteTask(index) {
+        deleteTask: function deleteTask(task, index) {
             var _this2 = this;
 
             axios.delete('/cart/delete/' + this.tasks[index].id).then(function (response) {
-
-                _this2.tasks.splice(index, 1);
-            }).catch(function (error) {});
+                _this2.tasks.$remove(task);
+            }).catch(function (error) {
+                alert('error from delete');
+            });
         }
     }
 });
@@ -43339,11 +43355,56 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(task.title))]),
             _vm._v(" "),
-            _c("td", [_vm._v("1 ")]),
+            _c("td", { staticClass: "qty" }, [
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.addQty()
+                    }
+                  }
+                },
+                [_vm._v("plus  ")]
+              ),
+              _vm._v(_vm._s(_vm.qty) + " "),
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.delQty()
+                    }
+                  }
+                },
+                [_vm._v("  minus")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.qty,
+                    expression: "qty"
+                  }
+                ],
+                attrs: { type: "hidden", name: "qty" },
+                domProps: { value: _vm.qty },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.qty = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(task.price))]),
             _vm._v(" "),
-            _c("td", [
+            _c("td", { staticClass: "delete" }, [
               _c(
                 "button",
                 {
@@ -43351,7 +43412,7 @@ var render = function() {
                   attrs: { type: "button" },
                   on: {
                     click: function($event) {
-                      _vm.deleteTask(index)
+                      _vm.deleteTask(task, index)
                     }
                   }
                 },

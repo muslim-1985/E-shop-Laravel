@@ -13,11 +13,14 @@
         <tr v-for="(task,index) in tasks">
             <td>{{ index+1 }}</td>
             <td>{{ task.title }}</td>
-            <td>1 </td>
+            <td class="qty">
+                <span @click="addQty()">plus  </span>{{ qty }} <span @click="delQty()">  minus</span>
+                <input type="hidden" name="qty" v-model="qty">
+            </td>
             <td>{{ task.price }}</td>
 
-            <td>
-                <button @click="deleteTask(index)" type="button" class="btn btn-xs">Delete</button>
+            <td class="delete">
+                <button @click="deleteTask(task,index)" type="button" class="btn btn-xs">Delete</button>
                 </td>
             </tr>
         </tbody>
@@ -29,33 +32,43 @@ export default {
     data() {
         return {
             errors: [],
-            tasks: []
+            tasks: [],
+            qty: 1
         }
     },
     mounted() {
         this.readTasks();
     },
+    creating() {
+      this.readTasks();
+    },
     methods: {
+        addQty() {
+           return this.qty++
+        },
+        delQty() {
+            if(this.qty <= 1){
+                return
+            }
+             this.qty--
+        },
         readTasks() {
-            axios.get('http://test/cart')
+            axios.get('/cart')
                     .then(response => {
                         this.tasks = response.data.tasks;
-                        this.readTasks();
                     })
                     .catch(error => {
                         alert('error');
                     });
         },
-        deleteTask(index)
+        deleteTask(task,index)
         {
                 axios.delete('/cart/delete/' + this.tasks[index].id)
                     .then(response => {
-
-                        this.tasks.splice(index, 1);
-
+                        this.tasks.$remove(task);
                     })
                     .catch(error => {
-
+                          alert('error from delete');
                     });
         }
     }

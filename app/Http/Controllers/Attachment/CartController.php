@@ -24,17 +24,19 @@ class CartController extends AppController
         //получаем данные массива сессии
         $tasks = session()->get('cart');
         //отправляем их в обработчик на js vue js шаблон
-        return response()->json(['tasks'=>$tasks]);
+        return response()->json([
+            'tasks'    => $tasks,
+        ], 200);
     }
-    public function DeleteCartData (Request $request, $id)
+    public function DeleteCartData (Request $request)
     {
-        $cartData = session()->get('cart');
-        foreach ($cartData as $key=>$value) {
-            if($value['id'] == $id) {
-                unset($cartData[$key]);
-            }
-        }
+        $cartData = $request->session()->get('cart');
+        // foreach ($cartData as $key => $value) {
+        //     if($value['id'] == $request->id) {
+        //         unset($cartData[$key]);
+        //     }
+        // }
         $request->session()->push('cart',$cartData);
-        return var_dump($id);//redirect()->back();
+        return dump($request->id);//redirect()->back();
     }
 }

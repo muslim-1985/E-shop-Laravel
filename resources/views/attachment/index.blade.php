@@ -244,8 +244,6 @@
                     @endforeach
                 </div><!--features_items-->
 
-                <h1>{{ dump(session()->get('cart')) }}</h1>
-
                 <div class="category-tab"><!--category-tab-->
                     <div class="col-sm-12">
                         <ul class="nav nav-tabs">
