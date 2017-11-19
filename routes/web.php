@@ -74,6 +74,7 @@ Route::namespace('Attachment')->group(function (){
     Route::get('/','SiteController@index')->name('front.main');
     Route::get('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
     Route::get('/cart','CartController@GetCartData')->name('front.cart');
+    Route::get('/cart/plusqty/{id}','CartController@AddQty')->name('front.add.qty');
     Route::get('/cart/ordering','CartController@Ordering')->name('ordering.cart');
     Route::delete('/cart/delete/{id}','CartController@DeleteCartData')->name('front.cart.delete');
 });

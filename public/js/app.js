@@ -43286,6 +43286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -43298,13 +43299,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.readTasks();
     },
-    creating: function creating() {
-        this.readTasks();
-    },
+
 
     methods: {
-        addQty: function addQty() {
-            return this.qty++;
+        addQty: function addQty(index) {
+            var _this = this;
+
+            axios.get('/cart/plusqty/' + this.tasks[index].id).then(function (response) {
+                _this.readTasks();
+            });
         },
         delQty: function delQty() {
             if (this.qty <= 1) {
@@ -43313,21 +43316,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.qty--;
         },
         readTasks: function readTasks() {
-            var _this = this;
+            var _this2 = this;
 
             axios.get('/cart').then(function (response) {
-                _this.tasks = response.data.tasks;
+                _this2.tasks = response.data.tasks;
             }).catch(function (error) {
                 alert('error');
             });
         },
         deleteTask: function deleteTask(task, index) {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.delete('/cart/delete/' + this.tasks[index].id).then(function (response) {
-                _this2.tasks.$remove(task);
+                _this3.tasks.$remove(task);
+                _this3.readTasks();
             }).catch(function (error) {
-                alert('error from delete');
+                _this3.readTasks();
             });
         }
     }
@@ -43356,53 +43360,23 @@ var render = function() {
             _c("td", [_vm._v(_vm._s(task.title))]),
             _vm._v(" "),
             _c("td", { staticClass: "qty" }, [
+              _vm._v("\n            " + _vm._s(task.qty) + " "),
               _c(
                 "span",
                 {
                   on: {
                     click: function($event) {
-                      _vm.addQty()
+                      _vm.addQty(index)
                     }
                   }
                 },
-                [_vm._v("plus  ")]
-              ),
-              _vm._v(_vm._s(_vm.qty) + " "),
-              _c(
-                "span",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.delQty()
-                    }
-                  }
-                },
-                [_vm._v("  minus")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.qty,
-                    expression: "qty"
-                  }
-                ],
-                attrs: { type: "hidden", name: "qty" },
-                domProps: { value: _vm.qty },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.qty = $event.target.value
-                  }
-                }
-              })
+                [_vm._v(" plus")]
+              )
             ]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(task.price))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(task.sum))]),
             _vm._v(" "),
             _c("td", { staticClass: "delete" }, [
               _c(
@@ -43438,6 +43412,8 @@ var staticRenderFns = [
       _c("th", [_vm._v("quantity")]),
       _vm._v(" "),
       _c("th", [_vm._v("price")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("sum")]),
       _vm._v(" "),
       _c("th", [_vm._v("actions")])
     ])

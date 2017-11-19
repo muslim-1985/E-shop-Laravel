@@ -17,8 +17,30 @@ class CartController extends AppController
         $request->session()->push('cart',$request->all());
         //$request->session()->flush();
         //записываем текущую сессию в переменную и передаем ее во вью
-        return var_dump(session()->get('cart'));//response(session()->get('cart'));
+        return response(session()->get('cart'));
     }
+
+    public function AddQty ($id)
+    {
+        $products = session()->get('cart');
+        //создаем ссылку на массив чтобы записать значения не в копию
+        // а напрямую в оринальный массив (амперсанд перед массивом $value)
+        foreach ($products as &$value) {
+            if ($value['id'] == $id) {
+                //прибавляем количество товара
+                $value['qty']++;
+                //в поле 'sum' изначальное значение которого стоимость товара
+                //прибавляем стоимость товара так как количество его возросло на единицу
+                $value['sum'] += $value['price'];
+                break;
+            }
+
+        }
+        //перезаписываем текущую сессию с новыми данными
+        $prodNew = session()->put('cart',$products);
+        return response(var_dump($prodNew[0]['qty']));
+    }
+
     public function GetCartData ()
     {
         //получаем данные массива сессии
@@ -28,15 +50,16 @@ class CartController extends AppController
             'tasks'    => $tasks,
         ], 200);
     }
-    public function DeleteCartData (Request $request)
+
+    public function DeleteCartData ($id)
     {
-        $cartData = $request->session()->get('cart');
-        // foreach ($cartData as $key => $value) {
-        //     if($value['id'] == $request->id) {
-        //         unset($cartData[$key]);
-        //     }
-        // }
-        $request->session()->push('cart',$cartData);
-        return dump($request->id);//redirect()->back();
+        $cartData = session()->get('cart');
+        foreach ($cartData as $key => $value) {
+            if($value['id'] == $id) {
+                unset($cartData[$key]);
+            }
+        }
+        session()->put('cart',$cartData);
+        return redirect()->back();
     }
 }

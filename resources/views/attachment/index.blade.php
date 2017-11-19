@@ -226,7 +226,9 @@
                                             data-url="{{ route('front.add.cart',$product->id) }}"
                                             data-id="{{ $product->id }}"
                                             data-title="{{ $product->title }}"
-                                            data-price="{{ $product->price }}">
+                                            data-price="{{ $product->price }}"
+                                            data-sum="{{ $product->price }}"
+                                            data-qty="1">
 
                                             <i class="fa fa-shopping-cart"></i>
                                             Add to cart
@@ -242,6 +244,7 @@
                             </div>
                         </div>
                     @endforeach
+
                 </div><!--features_items-->
 
                 <div class="category-tab"><!--category-tab-->

@@ -6,6 +6,7 @@
         <th>name</th>
         <th>quantity</th>
         <th>price</th>
+        <th>sum</th>
         <th>actions</th>
         </thead>
         <tbody>
@@ -14,10 +15,10 @@
             <td>{{ index+1 }}</td>
             <td>{{ task.title }}</td>
             <td class="qty">
-                <span @click="addQty()">plus  </span>{{ qty }} <span @click="delQty()">  minus</span>
-                <input type="hidden" name="qty" v-model="qty">
+                {{ task.qty }} <span @click="addQty(index)"> plus</span>
             </td>
             <td>{{ task.price }}</td>
+            <td>{{ task.sum }}</td>
 
             <td class="delete">
                 <button @click="deleteTask(task,index)" type="button" class="btn btn-xs">Delete</button>
@@ -39,12 +40,13 @@ export default {
     mounted() {
         this.readTasks();
     },
-    creating() {
-      this.readTasks();
-    },
+
     methods: {
-        addQty() {
-           return this.qty++
+        addQty(index) {
+           axios.get('/cart/plusqty/'+ this.tasks[index].id)
+               .then(response => {
+                   this.readTasks();
+               })
         },
         delQty() {
             if(this.qty <= 1){
@@ -66,10 +68,12 @@ export default {
                 axios.delete('/cart/delete/' + this.tasks[index].id)
                     .then(response => {
                         this.tasks.$remove(task);
+                        this.readTasks();
                     })
                     .catch(error => {
-                          alert('error from delete');
+                        this.readTasks();
                     });
+
         }
     }
 }

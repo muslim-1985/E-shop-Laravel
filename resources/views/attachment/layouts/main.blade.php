@@ -40,21 +40,26 @@
 
         $('.add-to-cart').on('click',function (e) {
             e.preventDefault();
+            var i = 0;
             var url = $(this).data('url');
             var id = $(this).data('id');
             var title = $(this).data('title');
             var price = $(this).data('price');
+            var qty = $(this).data('qty');
+            var sum = $(this).data('sum');
             $.ajax({
                 url: url,
                 data: {
                     id: id,
                     title: title,
                     price: price,
+                    qty: qty,
+                    sum: sum,
                 },
                 type: 'GET',
                 success: function (responce) {
                     if (!responce) alert(id);
-                    alert('Ваш товар успешно добавлен в корзину');
+                    alert('Ваш товар успешно добавлен в корзину' + responce);
                 }
             });
         });
