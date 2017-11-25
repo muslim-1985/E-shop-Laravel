@@ -11,6 +11,6 @@ class SiteController extends AppController
     public function index ()
     {
         $products = Product::all();
-        return view('attachment.index',compact('products'));
+        return view('attachment.index', compact('products'));
     }
 }

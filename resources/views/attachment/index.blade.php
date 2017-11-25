@@ -633,7 +633,6 @@
                 </div><!--/recommended_items-->
                 @include('attachment/layouts/modal')
             </div>
-            <h1>hello</h1>
         </div>
     </div>
 

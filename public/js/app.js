@@ -43287,6 +43287,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -43300,7 +43303,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.readTasks();
     },
 
-
+    computed: {
+        /* total price */
+        total: function total() {
+            if (this.tasks.length > 0) {
+                //"+" number because "sum" is object property is string
+                return this.tasks.reduce(function (acc, cur) {
+                    return +acc + +cur.sum;
+                }, 0);
+            }
+        }
+    },
     methods: {
         addQty: function addQty(index) {
             var _this = this;
@@ -43328,7 +43341,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             axios.delete('/cart/delete/' + this.tasks[index].id).then(function (response) {
-                _this3.tasks.$remove(task);
+                _this3.tasks.splice(index, 1);
                 _this3.readTasks();
             }).catch(function (error) {
                 _this3.readTasks();
@@ -43353,48 +43366,55 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.tasks, function(task, index) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(index + 1))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(task.title))]),
-            _vm._v(" "),
-            _c("td", { staticClass: "qty" }, [
-              _vm._v("\n            " + _vm._s(task.qty) + " "),
-              _c(
-                "span",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.addQty(index)
+        [
+          _vm._l(_vm.tasks, function(task, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(task.title))]),
+              _vm._v(" "),
+              _c("td", { staticClass: "qty" }, [
+                _vm._v("\n            " + _vm._s(task.qty) + " "),
+                _c(
+                  "span",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.addQty(index)
+                      }
                     }
-                  }
-                },
-                [_vm._v(" plus")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(task.price))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(task.sum))]),
-            _vm._v(" "),
-            _c("td", { staticClass: "delete" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-xs",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.deleteTask(task, index)
+                  },
+                  [_vm._v(" plus")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(task.price))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(task.sum))]),
+              _vm._v(" "),
+              _c("td", { staticClass: "delete" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-xs",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.deleteTask(task, index)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Delete")]
-              )
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
             ])
+          }),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", [_c("strong", [_vm._v("total: " + _vm._s(_vm.total))])])
           ])
-        })
+        ],
+        2
       )
     ]
   )

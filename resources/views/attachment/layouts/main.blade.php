@@ -30,6 +30,7 @@
         @yield('content')
     @include('attachment/layouts/partials/_footer')
 </body>
+
 <script>
     $(document).ready(function () {
         $.ajaxSetup({

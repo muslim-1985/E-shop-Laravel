@@ -24,6 +24,9 @@
                 <button @click="deleteTask(task,index)" type="button" class="btn btn-xs">Delete</button>
                 </td>
             </tr>
+        <tr>
+            <td><strong>total: {{ total }}</strong></td>
+        </tr>
         </tbody>
     </table>
 </template>
@@ -34,13 +37,21 @@ export default {
         return {
             errors: [],
             tasks: [],
-            qty: 1
+            qty: 1,
         }
     },
     mounted() {
         this.readTasks();
     },
-
+    computed: {
+        /* total price */
+        total() {
+            if(this.tasks.length > 0) {
+                //"+" number because "sum" is object property is string
+                return this.tasks.reduce((acc, cur) => +acc + +cur.sum, 0);
+            }
+        },
+    },
     methods: {
         addQty(index) {
            axios.get('/cart/plusqty/'+ this.tasks[index].id)
@@ -67,7 +78,7 @@ export default {
         {
                 axios.delete('/cart/delete/' + this.tasks[index].id)
                     .then(response => {
-                        this.tasks.$remove(task);
+                        this.tasks.splice(index, 1);
                         this.readTasks();
                     })
                     .catch(error => {
