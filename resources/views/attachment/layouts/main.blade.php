@@ -35,9 +35,61 @@
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $("input[name='_token']").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        $('.modal-body').on('click','#minus',function(e){
+            e.preventDefault();
+            var url = $(this).data('url');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (responce) {
+                    showCart(responce);
+                }
+            })
+        });
+        $('.modal-body').on('click','#plus',function(e){
+            e.preventDefault();
+            var url = $(this).data('url');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (responce) {
+                    showCart(responce);
+                }
+            })
+        });
+        $('.modal-body').on('click','#del',function(e){
+          e.preventDefault();
+          var url = $(this).data('url');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+          $.ajax({
+              type: 'DELETE',
+              url: url,
+              success: function (responce) {
+                  showCart(responce);
+              }
+          })
+        });
+
+        function showCart(cart) {
+            $('.modal-body').html(cart);
+        }
 
         $('.add-to-cart').on('click',function (e) {
             e.preventDefault();
@@ -60,7 +112,8 @@
                 type: 'GET',
                 success: function (responce) {
                     if (!responce) alert(id);
-                    alert('Ваш товар успешно добавлен в корзину' + responce);
+                    alert('Ваш товар успешно добавлен в корзину');
+                    showCart(responce);
                 }
             });
         });

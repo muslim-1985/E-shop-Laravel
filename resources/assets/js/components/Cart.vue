@@ -15,7 +15,7 @@
             <td>{{ index+1 }}</td>
             <td>{{ task.title }}</td>
             <td class="qty">
-                {{ task.qty }} <span @click="addQty(index)"> plus</span>
+                <span @click="delQty(index)"> minus</span> {{ task.qty }} <span @click="addQty(index)"> plus</span>
             </td>
             <td>{{ task.price }}</td>
             <td>{{ task.sum }}</td>
@@ -59,11 +59,11 @@ export default {
                    this.readTasks();
                })
         },
-        delQty() {
-            if(this.qty <= 1){
-                return
-            }
-             this.qty--
+        delQty(index) {
+            axios.get('/cart/minusqty/'+ this.tasks[index].id)
+                .then(response => {
+                    this.readTasks();
+                })
         },
         readTasks() {
             axios.get('/cart')

@@ -15,9 +15,10 @@ class CartController extends AppController
         //используем метод push (а не put) так как put перезаписывает данные массива сессии
         //в то время как push добавляет данные к уже существующему массиву
         $request->session()->push('cart',$request->all());
+        $products = session()->get('cart');
         //$request->session()->flush();
         //записываем текущую сессию в переменную и передаем ее во вью
-        return response(session()->get('cart'));
+        return view('attachment.layouts.partials._modal_body',compact('products'));
     }
 
     public function AddQty ($id)
@@ -38,7 +39,32 @@ class CartController extends AppController
         }
         //перезаписываем текущую сессию с новыми данными
         $prodNew = session()->put('cart',$products);
-        return response(var_dump($prodNew[0]['qty']));
+        return view('attachment.layouts.partials._modal_body',compact('products'));
+    }
+
+    public function DelQty ($id)
+    {
+        $products = session()->get('cart');
+        //создаем ссылку на массив чтобы записать значения не в копию
+        // а напрямую в оринальный массив (амперсанд перед массивом $value)
+        foreach ($products as &$value) {
+            if ($value['id'] == $id) {
+                //прибавляем количество товара
+                if ($value['qty'] > 1) {
+                    $value['qty']--;
+                }
+                //в поле 'sum' изначальное значение которого стоимость товара
+                //прибавляем стоимость товара так как количество его возросло на единицу
+                if ($value['sum'] > $value['price']) {
+                    $value['sum'] -= $value['price'];
+                }
+                break;
+            }
+
+        }
+        //перезаписываем текущую сессию с новыми данными
+        session()->put('cart',$products);
+        return view('attachment.layouts.partials._modal_body',compact('products'));
     }
 
     public function GetCartData ()
@@ -60,6 +86,8 @@ class CartController extends AppController
             }
         }
         session()->put('cart',$cartData);
-        return redirect()->back();
+        $products = session()->get('cart');
+        return view('attachment.layouts.partials._modal_body',compact('products'));
     }
+
 }

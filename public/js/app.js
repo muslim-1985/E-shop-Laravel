@@ -43322,29 +43322,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.readTasks();
             });
         },
-        delQty: function delQty() {
-            if (this.qty <= 1) {
-                return;
-            }
-            this.qty--;
-        },
-        readTasks: function readTasks() {
+        delQty: function delQty(index) {
             var _this2 = this;
 
+            axios.get('/cart/minusqty/' + this.tasks[index].id).then(function (response) {
+                _this2.readTasks();
+            });
+        },
+        readTasks: function readTasks() {
+            var _this3 = this;
+
             axios.get('/cart').then(function (response) {
-                _this2.tasks = response.data.tasks;
+                _this3.tasks = response.data.tasks;
             }).catch(function (error) {
                 alert('error');
             });
         },
         deleteTask: function deleteTask(task, index) {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.delete('/cart/delete/' + this.tasks[index].id).then(function (response) {
-                _this3.tasks.splice(index, 1);
-                _this3.readTasks();
+                _this4.tasks.splice(index, 1);
+                _this4.readTasks();
             }).catch(function (error) {
-                _this3.readTasks();
+                _this4.readTasks();
             });
         }
     }
@@ -43374,7 +43375,18 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(task.title))]),
               _vm._v(" "),
               _c("td", { staticClass: "qty" }, [
-                _vm._v("\n            " + _vm._s(task.qty) + " "),
+                _c(
+                  "span",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.delQty(index)
+                      }
+                    }
+                  },
+                  [_vm._v(" minus")]
+                ),
+                _vm._v(" " + _vm._s(task.qty) + " "),
                 _c(
                   "span",
                   {
