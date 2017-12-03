@@ -8,6 +8,7 @@
     <th>actions</th>
     </thead>
     <tbody>
+    @if(is_array($products))
     @foreach($products as $product)
     <tr>
         <td>1</td>
@@ -27,6 +28,7 @@
         </td>
     </tr>
     @endforeach
+    @endif
     <tr>
         <td>
             <strong>total:

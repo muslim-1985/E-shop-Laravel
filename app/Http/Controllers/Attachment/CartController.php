@@ -8,6 +8,13 @@ use App\Http\Controllers\Controller;
 
 class CartController extends AppController
 {
+    public function CartShow ()
+    {
+        $products = session()->get('cart');
+        //$request->session()->flush();
+        //записываем текущую сессию в переменную и передаем ее во вью
+        return view('attachment.layouts.partials._modal_body',compact('products'));
+    }
     public function AddToCart (Request $request)
     {
 

@@ -38,6 +38,22 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        //при перезагрузке показываем корзину с помощью самовызывающейся функции
+        (function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/cart/show',
+                success: function (responce) {
+                    showCart(responce);
+                }
+            })
+        })();
+
         $('.modal-body').on('click','#minus',function(e){
             e.preventDefault();
             var url = $(this).data('url');

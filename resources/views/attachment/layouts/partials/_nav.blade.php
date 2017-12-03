@@ -64,9 +64,18 @@
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li id="cart-qty"><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+
+                                <li>
+                                    @auth
+                                        <i class="fa fa-lock"></i> <a href="{{ url('/home') }}">Личный кабинет</a>
+                                        @else
+                                            <i class="fa fa-lock"></i> <a href="{{ route('login') }}">Login</a>
+                                            <i class="fa fa-lock"></i> <a href="{{ route('register') }}">Register</a>
+                                    @endauth
+                                </li>
                         </ul>
                     </div>
+                    {{--{{ Auth::user()->isUser() }}--}}
                 </div>
             </div>
         </div>

@@ -66,16 +66,19 @@ Route::namespace('Admin')->middleware('checkAdminRole')->group(function ()
     //Tag filter
     Route::get('/admin/post/tag/{id}','TagController@TagFilter')->name('admin.tag.filter');
 });
+//ordering product create
+Route::get('/cart/ordering','Admin\OrderController@create')->name('front.order.create');
+Route::post('/cart/ordering/store','Admin\OrderController@store')->name('front.order.store');
 
 Auth::routes();
 //frontend routes
 Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Attachment')->group(function (){
     Route::get('/','SiteController@index')->name('front.main');
+    Route::get('/cart/show','CartController@CartShow')->name('show.cart');
     Route::get('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
     Route::get('/cart','CartController@GetCartData')->name('front.cart');
     Route::get('/cart/plusqty/{id}','CartController@AddQty')->name('front.add.qty');
     Route::get('/cart/minusqty/{id}','CartController@DelQty')->name('front.del.qty');
-    Route::get('/cart/ordering','CartController@Ordering')->name('ordering.cart');
     Route::delete('/cart/delete/{id}','CartController@DeleteCartData')->name('front.cart.delete');
 });

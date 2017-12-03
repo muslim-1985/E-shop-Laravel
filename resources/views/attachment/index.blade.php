@@ -244,7 +244,7 @@
                             </div>
                         </div>
                     @endforeach
-
+                    {{--{{ dump(session()->get('cart')) }}--}}
                 </div><!--features_items-->
 
                 <div class="category-tab"><!--category-tab-->
