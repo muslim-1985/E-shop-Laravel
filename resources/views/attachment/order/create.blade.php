@@ -15,15 +15,7 @@
                 </ul>
             </div>
             <div class="col-md-6">
-                <h4>total:
-                    {{--Здесь мы применяем коллекции ларавел (метод reduce) для удобства вычислений. Окончательная сумма --}}
-                    {{
-                        collect(session()->get('cart'))->reduce(function ($carry, $item)
-                        {
-                            return $carry + $item['sum'];
-                        })
-                    }}
-                </h4>
+                <h4>total:{{ $total }}</h4>
             </div>
         </div>
         <div class="row">
@@ -44,13 +36,10 @@
             {{--сохраняем айдишники товаров из сессии в связующей таблице (отношение многие ко многим)--}}
              @foreach($cart as $val)
                 <input name="products[]" type="hidden" value="{{ $val['id'] }}">
+                <input name="qti[]" type="hidden" value="{{ $val['qty'] }}">
+                <input name="sum[]" type="hidden" value="{{ $val['sum'] }}">
              @endforeach
-                {{--<input name="qti[]" type="hidden" value="@foreach($cart as $val)--}}
-                                                            {{--{{ $val['qty'] }}--}}
-                                                            {{--@endforeach">--}}
-                {{--<input name="sum[]" type="hidden" value="@foreach($cart as $val)--}}
-                                                            {{--{{ $val['sum'] }}--}}
-                                                            {{--@endforeach">--}}
+            <input name="total" type="hidden" value="{{ $total }}">
             <div class="col-md-2" style="margin-top: 30px">
                 {{ Form::submit('Заказать', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 80px;')) }}
             </div>

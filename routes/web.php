@@ -65,6 +65,12 @@ Route::namespace('Admin')->middleware('checkAdminRole')->group(function ()
     Route::get('/admin/post/category/{id}/child','CategoryController@ParentCategoryFilter')->name('admin.parent.category.filter');
     //Tag filter
     Route::get('/admin/post/tag/{id}','TagController@TagFilter')->name('admin.tag.filter');
+
+    //order routes
+        Route::get('/admin/order','OrderAdminController@index')->name('admin.order');
+        Route::get('/admin/order/{id}','OrderAdminController@show')->name('admin.order.show');
+        Route::patch('/admin/order/{id}', 'OrderAdminController@ApprovedOrder')->name('admin.order.approved');
+        Route::delete('/admin/order/{id}','OrderAdminController@destroy')->name('admin.order.delete');
 });
 //ordering product create
 Route::get('/cart/ordering','Admin\OrderController@create')->name('front.order.create');

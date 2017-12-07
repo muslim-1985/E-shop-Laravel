@@ -17,7 +17,11 @@ class OrderController extends Controller
     public function create ()
     {
         $cart = session()->get('cart');
-        return view('attachment.order.create',compact('cart'));
+        $total =  collect(session()->get('cart'))->reduce(function ($carry, $item)
+        {
+            return $carry + $item['sum'];
+        });
+        return view('attachment.order.create',compact('cart','total'));
     }
 
     public function store (Request $request) {
@@ -25,8 +29,9 @@ class OrderController extends Controller
             'customer_name' => 'required|max:255',
             'customer_email' => 'required',
             'customer_phone' => 'required',
-//            'qti' => 'required',
-//            'sum' => 'required',
+            'qti' => 'required',
+            'sum' => 'required',
+            'total' => 'required',
         ]);
         //предварительная работа с чекбоксами ведется в Http/Provides/AppServiceProvider
         $order = Order::create($request->all());

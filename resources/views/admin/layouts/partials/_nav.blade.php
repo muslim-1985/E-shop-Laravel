@@ -35,6 +35,7 @@
                 <li><a href="{{ route('admin.category') }}">Categories</a></li>
                 <li><a href="{{ route('admin.brand') }}">Brands</a></li>
                 <li><a href="{{ route('admin.tag') }}">Tags</a></li>
+                <li><a href="{{ route('admin.order') }}">Orders</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
