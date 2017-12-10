@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>View Orders</h1>
+                <h1>View Customers</h1>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -13,8 +13,11 @@
                         <th>name</th>
                         <th>phone</th>
                         <th>email</th>
+                        <th>products</th>
+                        <th>total sum</th>
                         <th>created at</th>
                         <th>approved</th>
+                        <th>actions</th>
                         </thead>
                         <tbody>
                         @foreach($orders as $order)
@@ -23,6 +26,14 @@
                                 <td><a href="{{ route('admin.brand.filter',$order->id) }}">{{ $order->customer_name }}</a></td>
                                 <td>{{ $order->customer_phone }}</td>
                                 <td>{{ $order->customer_email }}</td>
+                                <td>
+                                    <ul>
+                                        @foreach($order->products as $product)
+                                            <li>{{ $product->title }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>{{ $order->total }}</td>
                                 <td>{{ date('M j,Y', strtotime($order->created_at ))}}</td>
                                 <td>
                                     @if($order->approved == 1)
@@ -45,7 +56,7 @@
                                     <button type="submit" style="display: inline;" class="btn btn-danger btn-xs">Delete</button>
 
                                     {!! Form::close() !!}
-                                    <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-success btn-xs">Show</a>
+                                    <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-success btn-xs">Customer Order</a>
                                 </td>
                             </tr>
 

@@ -34,21 +34,18 @@
                 {{ Form::text('customer_phone', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '100')) }}
             </div>
             {{--сохраняем айдишники товаров из сессии в связующей таблице (отношение многие ко многим)--}}
-             @foreach($cart as $val)
+            @foreach($cart as $val)
                 <input name="products[]" type="hidden" value="{{ $val['id'] }}">
                 <input name="qti[]" type="hidden" value="{{ $val['qty'] }}">
                 <input name="price[]" type="hidden" value="{{ $val['price'] }}">
                 <input name="sum[]" type="hidden" value="{{ $val['sum'] }}">
-             @endforeach
+            @endforeach
             <input name="total" type="hidden" value="{{ $total }}">
             <div class="col-md-2" style="margin-top: 30px">
                 {{ Form::submit('Заказать', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 80px;')) }}
             </div>
 
             {!! Form::close() !!}
-
-            <div class="col-md-6"></div>
-            <div class="col-md-6"></div>
         </div>
     </div>
 @endsection

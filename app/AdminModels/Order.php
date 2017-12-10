@@ -8,11 +8,12 @@ class Order extends Model
 {
     protected $casts = [
                'qti' => 'array',
+                'price'=>'array',
                'sum' => 'array',
                'status' => 'boolean',
             ];
     protected $fillable = [
-            'customer_name', 'customer_email', 'customer_phone','qti','sum','status', 'total',
+            'customer_name', 'customer_email', 'customer_phone','qti','price','sum','status', 'total',
        ];
     public function products ()
     {

@@ -19,8 +19,10 @@ class CreateOrdersTable extends Migration
             $table->string('customer_name');
             $table->string('customer_phone');
             $table->string('customer_email');
-            $table->integer('qti');
+            $table->string('qti');
+            $table->string('price');
             $table->string('sum');
+            $table->integer('total');
             $table->boolean('status');
             $table->timestamps();
         });
