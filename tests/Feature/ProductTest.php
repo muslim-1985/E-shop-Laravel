@@ -11,7 +11,7 @@ class ProductAdminViewsTest extends TestCase
 {
     //отключаем аутентификацию чтобы пройти тесты на возврат данных
     use WithoutMiddleware;
-    /**
+    /**laravel
      * A basic test example.
      *
      * @return void

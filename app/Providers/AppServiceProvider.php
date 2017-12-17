@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\AdminModels\Brand;
 use App\AdminModels\Category;
+use App\AdminModels\Order;
 use App\AdminModels\Product;
 use Illuminate\Support\ServiceProvider;
 
@@ -89,6 +90,10 @@ class AppServiceProvider extends ServiceProvider
 
         Category::deleted(function ($model){
             @unlink(public_path("images/$model->img"));
+        });
+
+        Order::creating(function($model){
+            $model->status === null ? 0:1;
         });
     }
 

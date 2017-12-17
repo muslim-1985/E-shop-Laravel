@@ -25,6 +25,7 @@ class OrderController extends Controller
     }
 
     public function store (Request $request) {
+
         $request->validate ([
             'customer_name' => 'required|max:255',
             'customer_email' => 'required',
@@ -33,8 +34,9 @@ class OrderController extends Controller
             'sum' => 'required',
             'total' => 'required',
         ]);
-        //предварительная работа с чекбоксами ведется в Http/Provides/AppServiceProvider
+
         $order = Order::create($request->all());
+
         if($request->input('products')) {
             $order->products()->sync($request->input('products'));
         }
