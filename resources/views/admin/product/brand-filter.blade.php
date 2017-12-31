@@ -6,20 +6,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a href="{{ route('admin.prod.create') }}" class="btn btn-primary btn-xs pull-right">+Create Product</a>
-                        {!! Form::open(['route' => 'admin.search.filter']) !!}
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    {{ Form::text('search', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '150')) }}
-                                </div>
-                                <div class="col-md-1">
-                                    {{ Form::submit('Search', array('class' => 'btn btn-success btn-sm btn-block')) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        {!! Form::close() !!}
-
+                        My Products
                     </div>
                 </div>
                 <div class="row">
@@ -43,7 +30,7 @@
                             <th>actions</th>
                             </thead>
                             <tbody>
-                            @foreach($products as $product)
+                            @foreach($brands->products as $product)
                                 <tr>
                                     <th>{{ $product->id }}</th>
                                     <td>{{ $product->title }}</td>
@@ -71,7 +58,7 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.brand.filter',$product->brand->id) }}">{{ $product->brand['title'] }}</a>
+                                        <a href="#">{{ $product->brand['title'] }}</a>
                                     </td>
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->qti }}</td>
@@ -110,7 +97,7 @@
                         </table>
                         <div class="col-md-offset-5 col-md-6">
                             {{--вывод пагинации--}}
-                            {{  $products->links() }}
+                            {{--{{  $products->links() }}--}}
                         </div>
                     </div>
                 </div>

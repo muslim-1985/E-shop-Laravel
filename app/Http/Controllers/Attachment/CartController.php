@@ -25,7 +25,7 @@ class CartController extends AppController
         $products = session()->get('cart');
         //$request->session()->flush();
         //записываем текущую сессию в переменную и передаем ее во вью
-        return view('attachment.layouts.partials._modal_body',compact('products'));
+        return response()->json(compact('products'), 200);
     }
 
     public function AddQty ($id)

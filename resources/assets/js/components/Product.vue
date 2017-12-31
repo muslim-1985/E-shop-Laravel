@@ -1,20 +1,14 @@
 <template>
-<div class="col-sm-4">
+<div class="features_items"><!--features_items-->
+<h2 class="title text-center">Features Items</h2>
+<div class="col-sm-4"  v-for="(product, index) in products">
     <div class="product-image-wrapper">
         <div class="single-products">
             <div class="productinfo text-center">
-                <?php $images = explode(' ',$product->img) ?>
-                <img src="{{asset("images/$images[0]" )}}" alt="" />
-                <h2>{{ $product->price }}</h2>
-                <p>{{ $product->title }}</p>
-                <a href="#"
-                   class="btn btn-default add-to-cart"
-                   data-url="{{ route('front.add.cart',$product->id) }}"
-                   data-id="{{ $product->id }}"
-                   data-title="{{ $product->title }}"
-                   data-price="{{ $product->price }}">
-
-                    <i class="fa fa-shopping-cart"></i>
+                <img :src="'/images/' +product.img.split(' ')[0]" alt="no image" />
+                <h2>{{ product.price }}</h2>
+                <p>{{  product.title }}</p>
+                <a href="#" @click="addProduct (index)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>
                     Add to cart
                 </a>
             </div>
@@ -27,4 +21,42 @@
         </div>
     </div>
 </div>
+</div>
 </template>
+<script>
+    export default {
+        data() {
+            return {
+                errors: [],
+                products: [],
+                cartSessionInner: [],
+                data: {}
+            }
+        },
+        mounted() {
+            this.showProducts();
+        },
+        methods: {
+            showProducts() {
+                axios.get('/parse')
+                    .then(response => {
+                        this.products = response.data.products;
+                    })
+                    .catch(error => {
+                        alert('error');
+                    });
+            },
+            addProduct (index) {
+                this.data = this.products[index];
+               axios.get('/cart/add/'+this.products[index].id, this.data)
+                   .then(response => {
+                       this.cartSessionInner = response.data.products;
+                       console.log(this.cartSessionInner);
+                   })
+                   .catch(error => {
+                       console.log('server error');
+                   })
+            }
+        }
+    }
+</script>

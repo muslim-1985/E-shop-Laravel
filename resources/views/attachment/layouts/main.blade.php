@@ -32,109 +32,109 @@
 </body>
 
 <script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        //при перезагрузке показываем корзину с помощью самовызывающейся функции
-        (function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                url: '/cart/show',
-                success: function (responce) {
-                    showCart(responce);
-                }
-            })
-        })();
-
-        $('.modal-body').on('click','#minus',function(e){
-            e.preventDefault();
-            var url = $(this).data('url');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function (responce) {
-                    showCart(responce);
-                }
-            })
-        });
-        $('.modal-body').on('click','#plus',function(e){
-            e.preventDefault();
-            var url = $(this).data('url');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function (responce) {
-                    showCart(responce);
-                }
-            })
-        });
-        $('.modal-body').on('click','#del',function(e){
-          e.preventDefault();
-          var url = $(this).data('url');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-          $.ajax({
-              type: 'DELETE',
-              url: url,
-              success: function (responce) {
-                  showCart(responce);
-              }
-          })
-        });
-
-        function showCart(cart) {
-            $('.modal-body').html(cart);
-        }
-
-        $('.add-to-cart').on('click',function (e) {
-            e.preventDefault();
-            var i = 0;
-            var url = $(this).data('url');
-            var id = $(this).data('id');
-            var title = $(this).data('title');
-            var price = $(this).data('price');
-            var qty = $(this).data('qty');
-            var sum = $(this).data('sum');
-            $.ajax({
-                url: url,
-                data: {
-                    id: id,
-                    title: title,
-                    price: price,
-                    qty: qty,
-                    sum: sum,
-                },
-                type: 'GET',
-                success: function (responce) {
-                    if (!responce) alert(id);
-                    alert('Ваш товар успешно добавлен в корзину');
-                    showCart(responce);
-                }
-            });
-        });
-
-    });
+//    $(document).ready(function () {
+//        $.ajaxSetup({
+//            headers: {
+//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//            }
+//        });
+//        //при перезагрузке показываем корзину с помощью самовызывающейся функции
+//        (function () {
+//            $.ajaxSetup({
+//                headers: {
+//                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                }
+//            });
+//            $.ajax({
+//                type: 'GET',
+//                url: '/cart/show',
+//                success: function (responce) {
+//                    showCart(responce);
+//                }
+//            })
+//        })();
+//
+//        $('.modal-body').on('click','#minus',function(e){
+//            e.preventDefault();
+//            var url = $(this).data('url');
+//            $.ajaxSetup({
+//                headers: {
+//                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                }
+//            });
+//            $.ajax({
+//                type: 'GET',
+//                url: url,
+//                success: function (responce) {
+//                    showCart(responce);
+//                }
+//            })
+//        });
+//        $('.modal-body').on('click','#plus',function(e){
+//            e.preventDefault();
+//            var url = $(this).data('url');
+//            $.ajaxSetup({
+//                headers: {
+//                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                }
+//            });
+//            $.ajax({
+//                type: 'GET',
+//                url: url,
+//                success: function (responce) {
+//                    showCart(responce);
+//                }
+//            })
+//        });
+//        $('.modal-body').on('click','#del',function(e){
+//          e.preventDefault();
+//          var url = $(this).data('url');
+//            $.ajaxSetup({
+//                headers: {
+//                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                }
+//            });
+//          $.ajax({
+//              type: 'DELETE',
+//              url: url,
+//              success: function (responce) {
+//                  showCart(responce);
+//              }
+//          })
+//        });
+//
+//        function showCart(cart) {
+//            $('.modal-body').html(cart);
+//        }
+//
+//        $('.add-to-cart').on('click',function (e) {
+//            e.preventDefault();
+//            var i = 0;
+//            var url = $(this).data('url');
+//            var id = $(this).data('id');
+//            var title = $(this).data('title');
+//            var price = $(this).data('price');
+//            var qty = $(this).data('qty');
+//            var sum = $(this).data('sum');
+//            $.ajax({
+//                url: url,
+//                data: {
+//                    id: id,
+//                    title: title,
+//                    price: price,
+//                    qty: qty,
+//                    sum: sum,
+//                },
+//                type: 'GET',
+//                success: function (responce) {
+//                    if (!responce) alert(id);
+//                    alert('Ваш товар успешно добавлен в корзину');
+//                    showCart(responce);
+//                }
+//            });
+//        });
+//
+//    });
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>

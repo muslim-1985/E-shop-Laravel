@@ -7,9 +7,9 @@
                 <h4 class="modal-title" id="gridSystemModalLabel">Modal title</h4>
             </div>
             <div class="modal-body">
-                {{--<div id="app">
+                <div id="app">
                     <cart></cart>
-                </div>--}}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

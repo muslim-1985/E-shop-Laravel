@@ -44,6 +44,7 @@
                     <div class="col-md-3">
                         {{ Form::label('img', 'Images:') }}
                         <input type="file" name="img[]"  multiple="multiple" >
+                        <small class="text-danger">{{ $errors->first('img') }}</small>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
@@ -77,7 +78,7 @@
                             {{ Form::text('price', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '100')) }}
                         </div>
                     </div>
-
+                </div>
                 <div class="col-md-4">
                     <div class="well">
                         <dl class="dl-horisontal">
@@ -98,7 +99,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             {!! Form::close() !!}
         </div>
       </div>

@@ -5,8 +5,8 @@
             <div class="col-md-12">
                 {{-- не забываем добавлять атрибут для загрузки фалов "multipart/formdata ('files'=> true)" --}}
                 {!! Form::open(['url' => 'admin/product/store', 'files' => true, 'data-parsley-validate'=>'']) !!}
-                    {{ Form::label('title', 'Title') }}
-                    {{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '150')) }}
+                {{ Form::label('title', 'Title') }}
+                {{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '150')) }}
 
                 {{ Form::label('desc', 'Description') }}
                 {{ Form::textarea('desc', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '250')) }}
@@ -36,6 +36,7 @@
                             @endif
                         @endforeach
                     </select>
+                    <small class="text-danger">{{ $errors->first('cat_id') }}</small>
                 </div>
 
                 <div class="col-md-3">
@@ -45,6 +46,7 @@
                 <div class="col-md-3">
                     {{ Form::label('img', 'Images:') }}
                     <input type="file" name="img[]"  multiple="multiple" >
+                    <small class="text-danger">{{ $errors->first('img') }}</small>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -54,6 +56,7 @@
                                 <option id="brand_id" value="{{$brand->id}}" selected="selected">{{ $brand->title }}</option>
                             @endforeach
                         </select>
+                        <small class="text-danger">{{ $errors->first('brand_id') }}</small>
                     </div>
                     <div class="col-md-4">
                         {{ Form::label('qti','quantity') }}

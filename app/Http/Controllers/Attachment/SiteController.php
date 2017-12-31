@@ -13,4 +13,9 @@ class SiteController extends AppController
         $products = Product::all();
         return view('attachment.index', compact('products'));
     }
+    public function indexGetJson ()
+    {
+        $products = Product::all();
+        return response()->json(compact('products'),  200);
+    }
 }

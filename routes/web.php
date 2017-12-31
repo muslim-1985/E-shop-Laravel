@@ -60,11 +60,15 @@ Route::namespace('Admin')->middleware('checkAdminRole')->group(function ()
 
     //обновление чекбокса публикации категории
     Route::patch('/admin/category/{id}/approve','CategoryController@ApprovedCategory')->name('admin.cat.approved');
-    //Category filter
+    //Category and marketing filter
     Route::get('/admin/post/category/{id}','ProductController@CategoryFilter')->name('admin.category.filter');
+    Route::get('/admin/post/hit','ProductController@HitFilter')->name('admin.hit.filter');
+    Route::get('/admin/post/new','ProductController@NewFilter')->name('admin.new.filter');
     Route::get('/admin/post/category/{id}/child','CategoryController@ParentCategoryFilter')->name('admin.parent.category.filter');
     //Tag filter
     Route::get('/admin/post/tag/{id}','TagController@TagFilter')->name('admin.tag.filter');
+    //search
+    Route::post('/admin/post/search','ProductController@ProductSearch')->name('admin.search.filter');
 
     //order routes
         Route::get('/admin/order','OrderAdminController@index')->name('admin.order');
@@ -81,6 +85,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Attachment')->group(function (){
     Route::get('/','SiteController@index')->name('front.main');
+    Route::get('/parse','SiteController@indexGetJson')->name('front.json');
     Route::get('/cart/show','CartController@CartShow')->name('show.cart');
     Route::get('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
     Route::get('/cart','CartController@GetCartData')->name('front.cart');
