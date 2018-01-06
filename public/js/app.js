@@ -43319,14 +43319,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addQty: function addQty(index) {
             var _this = this;
 
-            axios.get('/cart/plusqty/' + this.tasks[index].id).then(function (response) {
+            axios.post('/cart/plusqty/' + this.tasks[index].id).then(function (response) {
                 _this.readTasks();
             });
         },
         delQty: function delQty(index) {
             var _this2 = this;
 
-            axios.get('/cart/minusqty/' + this.tasks[index].id).then(function (response) {
+            axios.post('/cart/minusqty/' + this.tasks[index].id).then(function (response) {
                 _this2.readTasks();
             });
         },
@@ -43335,11 +43335,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('/cart').then(function (response) {
                 _this3.tasks = response.data.tasks;
+                console.log(_this3.tasks[0].id);
             }).catch(function (error) {
-                alert('error');
+                console.log('products not found');
             });
         },
-        deleteTask: function deleteTask(task, index) {
+        deleteTask: function deleteTask(index) {
             var _this4 = this;
 
             axios.delete('/cart/delete/' + this.tasks[index].id).then(function (response) {
@@ -43413,7 +43414,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        _vm.deleteTask(task, index)
+                        _vm.deleteTask(index)
                       }
                     }
                   },
@@ -43540,6 +43541,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -43567,10 +43572,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addProduct: function addProduct(index) {
             var _this2 = this;
 
+            var id = this.products[index].id;
+            var title = this.products[index].title;
+            var price = this.products[index].price;
+            var qty = 1;
+            var sum = price;
             this.data = this.products[index];
-            axios.get('/cart/add/' + this.products[index].id, this.data).then(function (response) {
+            axios.post('/cart/add/' + this.products[index].id, { id: id, title: title, price: price, qty: qty, sum: sum }).then(function (response) {
                 _this2.cartSessionInner = response.data.products;
-                console.log(_this2.cartSessionInner);
             }).catch(function (error) {
                 console.log('server error');
             });
@@ -43613,10 +43622,18 @@ var render = function() {
                 _c(
                   "a",
                   {
+                    ref: "cartBtn",
+                    refInFor: true,
                     staticClass: "btn btn-default add-to-cart",
-                    attrs: { href: "#" },
+                    attrs: {
+                      href: "#",
+                      "data-id": product.id,
+                      "data-title": product.title,
+                      "data-price": product.price
+                    },
                     on: {
                       click: function($event) {
+                        $event.preventDefault()
                         _vm.addProduct(index)
                       }
                     }

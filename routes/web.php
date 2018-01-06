@@ -87,9 +87,9 @@ Route::namespace('Attachment')->group(function (){
     Route::get('/','SiteController@index')->name('front.main');
     Route::get('/parse','SiteController@indexGetJson')->name('front.json');
     Route::get('/cart/show','CartController@CartShow')->name('show.cart');
-    Route::get('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
+    Route::post('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
     Route::get('/cart','CartController@GetCartData')->name('front.cart');
-    Route::get('/cart/plusqty/{id}','CartController@AddQty')->name('front.add.qty');
-    Route::get('/cart/minusqty/{id}','CartController@DelQty')->name('front.del.qty');
+    Route::post('/cart/plusqty/{id}','CartController@AddQty')->name('front.add.qty');
+    Route::post('/cart/minusqty/{id}','CartController@DelQty')->name('front.del.qty');
     Route::delete('/cart/delete/{id}','CartController@DeleteCartData')->name('front.cart.delete');
 });

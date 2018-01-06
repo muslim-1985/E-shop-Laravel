@@ -21,7 +21,7 @@
             <td>{{ task.sum }}</td>
 
             <td class="delete">
-                <button @click="deleteTask(task,index)" type="button" class="btn btn-xs">Delete</button>
+                <button @click="deleteTask(index)" type="button" class="btn btn-xs">Delete</button>
                 </td>
             </tr>
         <tr>
@@ -54,13 +54,13 @@ export default {
     },
     methods: {
         addQty(index) {
-           axios.get('/cart/plusqty/'+ this.tasks[index].id)
+           axios.post('/cart/plusqty/'+ this.tasks[index].id)
                .then(response => {
                    this.readTasks();
                })
         },
         delQty(index) {
-            axios.get('/cart/minusqty/'+ this.tasks[index].id)
+            axios.post('/cart/minusqty/'+ this.tasks[index].id)
                 .then(response => {
                     this.readTasks();
                 })
@@ -69,12 +69,13 @@ export default {
             axios.get('/cart')
                     .then(response => {
                         this.tasks = response.data.tasks;
+                        console.log(this.tasks[0].id);
                     })
                     .catch(error => {
-                        alert('error');
+                        console.log('products not found');
                     });
         },
-        deleteTask(task,index)
+        deleteTask(index)
         {
                 axios.delete('/cart/delete/' + this.tasks[index].id)
                     .then(response => {

@@ -45,8 +45,8 @@ class CartController extends AppController
 
         }
         //перезаписываем текущую сессию с новыми данными
-        $prodNew = session()->put('cart',$products);
-        return view('attachment.layouts.partials._modal_body',compact('products'));
+        session()->put('cart',$products);
+        return response()->json(compact('products'), 200);
     }
 
     public function DelQty ($id)
@@ -71,7 +71,7 @@ class CartController extends AppController
         }
         //перезаписываем текущую сессию с новыми данными
         session()->put('cart',$products);
-        return view('attachment.layouts.partials._modal_body',compact('products'));
+        return response()->json(compact('products'), 200);
     }
 
     public function GetCartData ()
@@ -79,9 +79,7 @@ class CartController extends AppController
         //получаем данные массива сессии
         $tasks = session()->get('cart');
         //отправляем их в обработчик на js vue js шаблон
-        return response()->json([
-            'tasks'    => $tasks,
-        ], 200);
+        return response()->json(compact('tasks'), 200);
     }
 
     public function DeleteCartData ($id)
@@ -94,7 +92,7 @@ class CartController extends AppController
         }
         session()->put('cart',$cartData);
         $products = session()->get('cart');
-        return view('attachment.layouts.partials._modal_body',compact('products'));
+        return response()->json(compact('products'), 200);
     }
 
 }

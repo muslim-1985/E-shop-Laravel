@@ -8,7 +8,11 @@
                 <img :src="'/images/' +product.img.split(' ')[0]" alt="no image" />
                 <h2>{{ product.price }}</h2>
                 <p>{{  product.title }}</p>
-                <a href="#" @click="addProduct (index)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>
+                <a ref="cartBtn" href="#" @click.prevent="addProduct (index)"
+                   :data-id = "product.id"
+                   :data-title = "product.title"
+                   :data-price = "product.price"
+                   class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>
                     Add to cart
                 </a>
             </div>
@@ -47,11 +51,15 @@
                     });
             },
             addProduct (index) {
+                const id = this.products[index].id;
+                const title = this.products[index].title;
+                const price = this.products[index].price;
+                const qty = 1;
+                const sum = price;
                 this.data = this.products[index];
-               axios.get('/cart/add/'+this.products[index].id, this.data)
+               axios.post('/cart/add/'+this.products[index].id, {id, title, price, qty, sum})
                    .then(response => {
                        this.cartSessionInner = response.data.products;
-                       console.log(this.cartSessionInner);
                    })
                    .catch(error => {
                        console.log('server error');
