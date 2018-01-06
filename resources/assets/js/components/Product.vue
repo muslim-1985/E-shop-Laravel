@@ -28,6 +28,8 @@
 </div>
 </template>
 <script>
+    //импортируем общий класс для обмена данными
+    import{EventBus} from '../bus';
     export default {
         data() {
             return {
@@ -60,6 +62,10 @@
                axios.post('/cart/add/'+this.products[index].id, {id, title, price, qty, sum})
                    .then(response => {
                        this.cartSessionInner = response.data.products;
+                       //создаем событие для того чтобы его словил компонент корзины и вызвал коллбек перезагрузки
+                       //событие передается через общий класс Vue который импортируется в оба компонента
+                       //таким образом позволяя им обмениваться данными без прямого наследования (вызова дочернего компонента)
+                       EventBus.$emit('reloadCart');
                    })
                    .catch(error => {
                        console.log('server error');

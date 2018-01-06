@@ -43258,6 +43258,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus__ = __webpack_require__(58);
 //
 //
 //
@@ -43292,6 +43293,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -43302,6 +43304,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.readTasks();
+    },
+
+    //подписка на событие клика по кнопке "добавить в корзину" в компоненте Product
+    //вызываем функцию перезагрузки корзины с помощью метода - события vue js created()
+    // данное событие автоматически запускается после того как элементы корзины успешно прогрузяться
+    created: function created() {
+        __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* EventBus */].$on('reloadCart', this.readTasks);
     },
 
     computed: {
@@ -43335,7 +43344,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('/cart').then(function (response) {
                 _this3.tasks = response.data.tasks;
-                console.log(_this3.tasks[0].id);
             }).catch(function (error) {
                 console.log('products not found');
             });
@@ -43516,6 +43524,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus__ = __webpack_require__(58);
 //
 //
 //
@@ -43545,6 +43554,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+//импортируем общий класс для обмена данными
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -43580,6 +43591,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.data = this.products[index];
             axios.post('/cart/add/' + this.products[index].id, { id: id, title: title, price: price, qty: qty, sum: sum }).then(function (response) {
                 _this2.cartSessionInner = response.data.products;
+                //создаем событие для того чтобы его словил компонент корзины и вызвал коллбек перезагрузки
+                //событие передается через общий класс Vue который импортируется в оба компонента
+                //таким образом позволяя им обмениваться данными без прямого наследования (вызова дочернего компонента)
+                __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* EventBus */].$emit('reloadCart');
             }).catch(function (error) {
                 console.log('server error');
             });
@@ -43694,6 +43709,25 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventBus; });
+window.Vue = __webpack_require__(36);
+
+var EventBus = new Vue();
 
 /***/ })
 /******/ ]);

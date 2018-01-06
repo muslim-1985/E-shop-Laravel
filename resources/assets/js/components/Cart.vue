@@ -32,6 +32,7 @@
 </template>
 
 <script>
+    import {EventBus} from '../bus'
 export default {
     data() {
         return {
@@ -42,6 +43,12 @@ export default {
     },
     mounted() {
         this.readTasks();
+    },
+    //подписка на событие клика по кнопке "добавить в корзину" в компоненте Product
+    //вызываем функцию перезагрузки корзины с помощью метода - события vue js created()
+    // данное событие автоматически запускается после того как элементы корзины успешно прогрузяться
+    created() {
+        EventBus.$on('reloadCart', this.readTasks);
     },
     computed: {
         /* total price */
@@ -69,7 +76,6 @@ export default {
             axios.get('/cart')
                     .then(response => {
                         this.tasks = response.data.tasks;
-                        console.log(this.tasks[0].id);
                     })
                     .catch(error => {
                         console.log('products not found');
