@@ -10,12 +10,24 @@ class SiteController extends AppController
 {
     public function index ()
     {
-        $products = Product::all();
-        return view('attachment.index', compact('products'));
+        return view('attachment.index');
     }
     public function indexGetJson ()
     {
-        $products = Product::all();
+        //выводим только те продукты которые находятся в опубликованных категориях
+        //сортируем их по дате публикации (выводим последние)
+        //не более 9 единиц
+        $products = Product::whereHas('category', function($query) {
+            $query->where('approved', 1);
+        })
+            ->orderBy('created_at', 'desc')
+            ->take(9)
+            ->get();
         return response()->json(compact('products'),  200);
+    }
+    public function SearchProdutsByName ()
+    {
+        //используем метод родительского класса чтобы не было повторений
+        return $this->GetProductsInApprovedCategory();
     }
 }

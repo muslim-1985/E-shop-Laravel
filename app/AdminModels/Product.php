@@ -16,7 +16,6 @@ class Product extends Model
             @unlink(public_path("images/$img"));
         }
     }
-
     //before save multiple upload images function in Http/Providers/AppServiceProvider
     public function PreparedImages(array $img)
     {
