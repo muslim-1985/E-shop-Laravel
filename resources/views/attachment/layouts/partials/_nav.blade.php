@@ -1,4 +1,5 @@
 
+<div id="app">{{--добавляем глобальный айдишник для vue--}}
 <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
         <div class="container">
@@ -117,9 +118,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="search_box pull-right">
-                        <input type="text" placeholder="Search"/>
-                    </div>
+                    <search></search>
                 </div>
             </div>
         </div>

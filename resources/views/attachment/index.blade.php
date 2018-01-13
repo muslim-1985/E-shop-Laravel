@@ -209,7 +209,7 @@
                 </div>
             </div>
             {{--присваиваем нужный айдишник элементу для вывода шаблона vue--}}
-            <div class="col-sm-9 padding-right" id="app">
+            <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
                         {{--выводим товары с помощью vue--}}
                         <products></products>
@@ -605,4 +605,5 @@
     </div>
 
 </section>
+</div>
 @endsection

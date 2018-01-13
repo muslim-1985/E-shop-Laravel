@@ -25,9 +25,9 @@ class SiteController extends AppController
             ->get();
         return response()->json(compact('products'),  200);
     }
-    public function SearchProdutsByName ()
+    public function SearchProdutsByName ($title)
     {
         //используем метод родительского класса чтобы не было повторений
-        return $this->GetProductsInApprovedCategory();
+        return $this->GetProductsInApprovedCategory($title);
     }
 }

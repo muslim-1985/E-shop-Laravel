@@ -86,7 +86,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Attachment')->group(function (){
     Route::get('/','SiteController@index')->name('front.main');
     Route::get('/parse','SiteController@indexGetJson')->name('front.json');
-    Route::post('/search', 'SiteController@SearchProdutsByName')->name('front.search');
+    Route::post('/search/{title}', 'SiteController@SearchProdutsByName')->name('front.search');
     Route::get('/cart/show','CartController@CartShow')->name('show.cart');
     Route::post('/cart/add/{id}','CartController@AddToCart')->name('front.add.cart');
     Route::get('/cart','CartController@GetCartData')->name('front.cart');

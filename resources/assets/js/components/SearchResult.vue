@@ -1,6 +1,5 @@
 <template>
     <div class="features_items"><!--features_items-->
-        <h2 class="title text-center">Features Items</h2>
         <div class="col-sm-4"  v-for="(product, index) in products">
             <div class="product-image-wrapper">
                 <div class="single-products">
@@ -36,20 +35,35 @@
                 products: [],
             }
         },
-        mounted() {
-            this.showProducts();
-        },
-        methods: {
-            showProducts() {
-                axios.post('/search')
-                    .then(response => {
-                        this.products = response.data.getAllProducts;
-                        console.log(response.data.getAllProducts)
-                    })
-                    .catch(error => {
-                        alert('error');
-                    });
-            }
+//        mounted() {
+//            this.showProducts();
+//        },
+        created() {
+            //пробрасываем событие из компонента Search (реакция на изменение инпута поиска)
+            //записываем результаты ввода в переменную title (она передается из компонента в виде аргумента коллбека)
+            //отправляем Post запрос с указанием результата поиска и обрабатываем его на сервере
+            //результаты выводим на экран
+            EventBus.$on('changeInput', (title) => {
+               axios.post('/search/'+title)
+                   .then(response => {
+                       this.products = response.data.getAllProducts;
+                       console.log(response);
+                   })
+                   .catch(error => {
+                       console.log(url);
+                   })
+            })
         }
+//        methods: {
+//            showProducts() {
+//                axios.post('/search')
+//                    .then(response => {
+//                        this.products = response.data.getAllProducts;
+//                    })
+//                    .catch(error => {
+//                        alert('error');
+//                    });
+//            }
+//        }
     }
 </script>

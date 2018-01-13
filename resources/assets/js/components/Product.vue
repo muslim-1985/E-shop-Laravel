@@ -1,5 +1,6 @@
 <template>
 <div>
+    <search-result></search-result>
     <div class="features_items"><!--features_items-->
     <h2 class="title text-center">Features Items</h2>
     <div class="col-sm-4"  v-for="(product, index) in products">
@@ -27,7 +28,6 @@
         </div>
     </div>
     </div>
-    <search-result></search-result>
 </div>
 </template>
 <script>
