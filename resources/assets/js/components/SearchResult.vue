@@ -50,7 +50,7 @@
                        console.log(response);
                    })
                    .catch(error => {
-                       console.log(url);
+                       console.log(error);
                    })
             })
         }

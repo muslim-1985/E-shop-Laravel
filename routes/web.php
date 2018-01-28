@@ -94,3 +94,5 @@ Route::namespace('Attachment')->group(function (){
     Route::post('/cart/minusqty/{id}','CartController@DelQty')->name('front.del.qty');
     Route::delete('/cart/delete/{id}','CartController@DeleteCartData')->name('front.cart.delete');
 });
+Route::get('/chat', 'ChatController@Index')->name('chat.root');
+Route::post('/chat/send', 'ChatController@Store')->name('chat.store');

@@ -6,9 +6,9 @@ use App\AdminModels\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AppController extends Controller
+abstract class AppController extends Controller
 {
-    public function GetProductsInApprovedCategory ($title)
+    public function GetProductsInApprovedCategory (string $title)
     {
         //выборка по подтвержденными категориям + поиск
         $getAllProducts = Product::whereHas('category', function($query) {
