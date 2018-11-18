@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\AdminModels\Brand;
+use App\Http\Helpers\ElasticHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -34,13 +35,28 @@ class BrandController extends Controller
         return view('admin.brand.create',compact('brands'));
     }
 
-    public function store (Request $request)
+    public function store (Request $request, ElasticHelper $elasticHelper)
     {
         $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required',
         ]);
-        Brand::create($request->all());
+        $brand = Brand::create($request->all());
+
+        $elasticHelper->Index([
+            'index' => 'brand',
+            'type' => 'brand',
+            'id' => $brand->id,
+            'body' => [
+                'title' => $brand->desc,
+                'img' => $brand->img,
+                'slug' => $brand->slug,
+                'approved' => $brand->approved,
+                'created_at' => $brand->created_at,
+                'updated_at' => $brand->updated_at
+            ]
+        ]);
+
         return redirect('admin/brand');
     }
 

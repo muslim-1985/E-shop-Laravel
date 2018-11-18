@@ -117,4 +117,8 @@ return [
 
     ],
 
+    'elastic' => [
+        'host' => env('ELASTIC_HOST', '127.0.0.1:9200'),
+    ]
+
 ];

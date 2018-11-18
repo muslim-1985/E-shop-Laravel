@@ -1,0 +1,47 @@
+version: "3"
+services:
+  app:
+    build: ./www
+    environment:
+      - APACHE_RUN_USER=#1000
+      - VIRTUAL_HOST=eshop.dev
+    volumes:
+      - .:/var/www/html/
+      - ./www/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+      - "8080:80"
+    working_dir: /var/www/html/
+    links:
+      - db:database
+      - elasticsearchRos:elastic
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    command: mysqld --sql_mode=""
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6090:8080
+    volumes:
+      - ./www/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+  composer:
+    image: composer:latest
+    volumes:
+      - .:/var/www/html/
+    working_dir: /var/www/html/
+    command: bash -c 'composer install'
+
+  elasticsearchRos:
+    image: elasticsearch:6.5.0
+    container_name: elasticsearchRos
+    environment:
+      - "discovery.type=single-node"
+      - xpack.security.enabled=false
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+    ports:
+      - 9600:9200
