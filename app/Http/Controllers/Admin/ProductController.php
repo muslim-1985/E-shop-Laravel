@@ -6,6 +6,8 @@ use App\AdminModels\Brand;
 use App\AdminModels\Category;
 use App\AdminModels\Product;
 use App\AdminModels\Tag;
+use App\Http\Helpers\Contracts\SearchEngine;
+use App\Jobs\ElasticSave;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +28,7 @@ class ProductController extends Controller
         return view('admin.product.create',compact('tags','rootCategories','brands'));
     }
 
-    public function store (Request $request) {
+    public function store (Request $request, SearchEngine $searchEngine) {
         $request->validate ([
             'title' => 'required|max:255',
             'desc' => 'required',
@@ -42,6 +44,31 @@ class ProductController extends Controller
         if($request->input('tags')) {
             $product->tags()->sync($request->input('tags'));
         }
+
+        $tags = [];
+        foreach ($product->tags as $tag) {
+            $tags[] = $tag->title;
+        }
+        $indexArr = [
+            'index' => 'product',
+            'type' => 'product',
+            'id' => $product->id,
+            'body' => [
+                'title' => $product->desc,
+                'img' => $product->img,
+                'qti' => $product->qti,
+                'price' => $product->price,
+                'category' => $product->category->title,
+                'brand' => $product->brand->title,
+                'tags' => [
+                    $tags
+                ],
+                'created_at' => $product->created_at,
+                'updated_at' => $product->updated_at
+            ]
+        ];
+        //откладываем в очередь
+        ElasticSave::dispatch($indexArr);
 
         //редирект на индексную страницу
         return redirect('/admin');

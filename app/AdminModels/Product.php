@@ -17,7 +17,7 @@ class Product extends Model
         }
     }
     //before save multiple upload images function in Http/Providers/AppServiceProvider
-    public function PreparedImages(array $img)
+    public function PreparedImages(array $img) :string
     {
         //объявление переменной с пустым массивом для сохранения в нем данных с названиями файлов
         $arr=[];

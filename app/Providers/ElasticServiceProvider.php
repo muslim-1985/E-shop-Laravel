@@ -29,12 +29,9 @@ class ElasticServiceProvider extends ServiceProvider
     {
         //подгружаем вначале клиент обертки эластика
         $elasticHost = [config('database.elastic.host')];
-        $this->app->bind(Client::class, function () use ($elasticHost) {
-            return ClientBuilder::create()->setHosts($elasticHost)->build();
-        });
         //создаем связь с интерфейсом в сервис провайдере
-        $this->app->bind(SearchEngine::class, function() {
-            return new ElasticHelper(Client::class);
+        $this->app->bind(SearchEngine::class, function() use ($elasticHost)  {
+            return new ElasticHelper(ClientBuilder::create()->setHosts($elasticHost)->build());
             //return new SphinxHelper(Client::class);
         });
     }

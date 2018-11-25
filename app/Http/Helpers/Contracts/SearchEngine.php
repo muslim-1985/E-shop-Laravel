@@ -11,6 +11,7 @@ namespace App\Http\Helpers\Contracts;
 
 interface SearchEngine
 {
+
     public function Index (array  $params);
 
     public function Delete (array  $params);
